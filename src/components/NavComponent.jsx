@@ -53,7 +53,7 @@ function NavComponent({
 }
 
 NavComponent.propTypes = {
-  gameTime: PropTypes.number,
+  gameTime: PropTypes.string,
   firstCharImg: PropTypes.string,
   firstCharImgDesc: PropTypes.string,
   firstCharName: PropTypes.string,

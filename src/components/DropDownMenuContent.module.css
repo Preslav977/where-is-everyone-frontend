@@ -1,0 +1,15 @@
+.dropDownCharacterContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dropDownCharacterContainer > p {
+  color: white;
+}
+
+.dropDownCharacterImg {
+  width: 40px;
+  height: 40px;
+}
