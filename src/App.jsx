@@ -1,5 +1,6 @@
 import NavComponent from "./components/NavComponent";
 import MainComponent from "./components/MainComponent";
+import FooterComponent from "./components/FooterComponent";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         gameImgSrc="dragon-charmers-island.jpg"
         gameImgDesc="Dragon Charmers Insland"
       />
+      <FooterComponent />
     </>
   );
 }

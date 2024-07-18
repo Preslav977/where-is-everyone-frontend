@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 function MainComponent({ gameImgSrc, gameImgDesc }) {
   return (
-    <>
+    <main>
       <img
         className={style.mainComponentImg}
         src={gameImgSrc}
         alt={gameImgDesc}
       />
-    </>
+    </main>
   );
 }
 
