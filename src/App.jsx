@@ -1,35 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import NavComponent from "./components/NavComponent";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <NavComponent
+      gameTime="0:00:00"
+      firstCharImg="raft-man.png"
+      firstCharImgDesc="Raft Man character"
+      firstCharName="Raft Man"
+      secondCharImg="wizard.png"
+      secondCharImgDesc="Wizard character"
+      secondCharName="Wizard"
+      thirdCharImg="dragon.png"
+      thirdCharImgDesc="Dragon character"
+      thirdCharName="Dragon"
+    ></NavComponent>
+  );
 }
 
-export default App
+export default App;

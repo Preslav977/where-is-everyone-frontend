@@ -1,0 +1,51 @@
+.navContainer {
+  outline: 2px solid black;
+  display: flex;
+  padding: 1em;
+  justify-content: space-between;
+  align-items: center;
+  /* max-width: 1200px; */
+  background-color: #0b0d22;
+}
+
+.navLinkSpan {
+  color: #4ce1d7;
+}
+
+.navContentHomeBtn {
+  font-size: 1.25rem;
+  border: 0;
+  padding: 0.8em;
+  background-color: #0b0d22;
+  color: white;
+}
+
+.navContentGameTime {
+  font-size: 1.35rem;
+  color: white;
+}
+
+.navContentFlexCharWrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.navContentFlexCharContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navContentFlexCharName {
+  color: white;
+}
+
+.navContentFlexCharContainer > .navContentFlexCharImg {
+  border: 1.5px solid black;
+  border-radius: 10px;
+}
+
+.navContentFlexCharImg {
+  height: 50px;
+  width: 50px;
+}
