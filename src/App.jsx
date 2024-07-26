@@ -13,26 +13,31 @@ function App() {
 
   useEffect(() => {
     function getCoordinates(e) {
-      const retrieveCoordinates = {
+      const rect = e.target.getBoundingClientRect();
+
+      const retrieveAndSetCoordinates = {
         ...coordinates,
-        x: event.offsetX,
-        y: event.offsetY,
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
       };
 
-      setCoordinates(retrieveCoordinates);
+      setCoordinates(retrieveAndSetCoordinates);
 
-      console.log(coordinates);
+      if (dropdownRef.current.style.display === "none") {
+        dropdownRef.current.style.display = "flex";
+      } else {
+        dropdownRef.current.style.display = "none";
+      }
     }
-
-    if (dropdownRef.current.style.display === "none") {
-      dropdownRef.current.style.display = "flex";
-    } else {
-      dropdownRef.current.style.display = "none";
-    }
-
     window.addEventListener("click", getCoordinates);
     return () => window.removeEventListener("click", getCoordinates);
   });
+
+  function printCoordinates() {
+    const copyCoords = { ...coordinates };
+
+    console.log(copyCoords);
+  }
 
   return (
     <>
@@ -53,6 +58,7 @@ function App() {
           display: "none",
         }}
         ref={dropdownRef}
+        onClick={printCoordinates}
       >
         <div className="dropDownContent">
           <div
@@ -89,7 +95,7 @@ function App() {
       </div>
       <MainComponent
         gameImgSrc="dragon-charmers-island.jpg"
-        gameImgDesc="Dragon Charmers Island"
+        gameImgDesc="Dragon Charmers Island Game"
       />
       <FooterComponent />
     </>
