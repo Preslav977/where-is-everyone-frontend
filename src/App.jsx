@@ -8,12 +8,24 @@ import "./App.css";
 
 function App() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [imageWidthAndHeight, setImageWidthAndHeight] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const targetingBoxDimension = 70;
+
+  const divideTargetingBox = targetingBoxDimension / 2;
 
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
+
+      // console.log("Width", rect.width, "Height", rect.height);
+
+      console.log(rect);
 
       const retrieveAndSetCoordinates = {
         ...coordinates,
@@ -28,7 +40,20 @@ function App() {
       } else {
         dropdownRef.current.style.display = "none";
       }
+
+      const retrieveAndSetImageDimensions = {
+        ...imageWidthAndHeight,
+        width: rect.width,
+        height: rect.height,
+      };
+
+      if (rect.width === 5 && rect.height === 5) {
+        return;
+      } else {
+        setImageWidthAndHeight(retrieveAndSetImageDimensions);
+      }
     }
+
     window.addEventListener("click", getCoordinates);
     return () => window.removeEventListener("click", getCoordinates);
   });
@@ -37,6 +62,44 @@ function App() {
     const copyCoords = { ...coordinates };
 
     console.log(copyCoords);
+
+    const normalizeRaftManX = (copyCoords.x / imageWidthAndHeight.width) * 100;
+
+    const normalizeRaftManY = (copyCoords.y / imageWidthAndHeight.height) * 100;
+
+    // console.log(
+    //   "Normalized X",
+    //   normalizeRaftManX,
+    //   "Normalized Y",
+    //   normalizeRaftManY,
+    // );
+
+    const findLowerBoundX =
+      ((copyCoords.x - divideTargetingBox) / imageWidthAndHeight.width) * 100;
+
+    const findLowerBoundY =
+      ((copyCoords.y - divideTargetingBox) / imageWidthAndHeight.height) * 100;
+
+    // console.log(findLowerBoundX, findLowerBoundY);
+
+    const findUpperBoundX =
+      ((copyCoords.x + divideTargetingBox) / imageWidthAndHeight.width) * 100;
+
+    const findUpperBoundY =
+      ((copyCoords.y + divideTargetingBox) / imageWidthAndHeight.height) * 100;
+
+    // console.log(findUpperBoundX, findUpperBoundY);
+
+    // if (
+    //   normalizeRaftManX <= findLowerBoundX ||
+    //   normalizeRaftManX >= findUpperBoundX ||
+    //   normalizeRaftManY <= findLowerBoundY ||
+    //   normalizeRaftManY >= findUpperBoundY
+    // ) {
+    //   console.log("Target not found");
+    // } else {
+    //   console.log("You found Raft Man");
+    // }
   }
 
   return (
@@ -63,7 +126,7 @@ function App() {
         <div className="dropDownContent">
           <div
             style={{
-              transform: `translate(${coordinates.x - 35}px, ${coordinates.y - 35}px)`,
+              transform: `translate(${coordinates.x - divideTargetingBox}px, ${coordinates.y - divideTargetingBox}px)`,
             }}
             className="dropDownTargetingBox"
           >
@@ -71,7 +134,7 @@ function App() {
           </div>
           <div
             style={{
-              transform: `translate(${coordinates.x - 35}px, ${coordinates.y - 35}px)`,
+              transform: `translate(${coordinates.x - divideTargetingBox}px, ${coordinates.y - divideTargetingBox}px)`,
             }}
             className="dropDownMenu"
           >
