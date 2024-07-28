@@ -23,9 +23,9 @@ function App() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
-      // console.log("Width", rect.width, "Height", rect.height);
+      console.log("Width", rect.width, "Height", rect.height);
 
-      console.log(rect);
+      // console.log(rect);
 
       const retrieveAndSetCoordinates = {
         ...coordinates,
@@ -61,18 +61,47 @@ function App() {
   function printCoordinates() {
     const copyCoords = { ...coordinates };
 
+    //Raft Man Coordinates Big Screen 98 X, 1140 Y, 1915px width, 2702.90625 px height
+
+    //Normalized Coordinates X 5,12, Coordinate Y 42.18 Big Screen
+
+    //Raft Man Coordinates Small Screen 45 X 519 Y, 876px width, 1236.40625px height
+
+    //Normalized Coordinates X 5,14 Coordinate Y 41.98 Small Screen
+
+    //////////////////////////////////////////////////////////////////////////////////
+
+    //Dragon Coordinates Big Screen 1269 X, 1149 Y, 1915px width, 2702.90625 px height
+
+    //Normalized Coordinates X 66.27, Coordinate Y 42.51 Big Screen
+
+    //Dragon Coordinates Small Screen 579 X, 523 Y, 874px width, 1233.59375 px height
+
+    //Normalized Coordinates X 66.25. Coordinate Y 42.40 Small Screen
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    //Wizard Coordinates Big Screen 1453 X, 1780 Y, 1915px width, 2702.90625 px height
+
+    //Normalized Coordinates X 75.87, 65.85 Y Big Screen
+
+    //Wizard Coordinates Small Screen 661 X, 812 Y, 874px width, 1233.59375 px height
+
+    //Normalized Coordinates X 75.73, 65.82 Y Small Screen
+
     console.log(copyCoords);
 
-    const normalizeRaftManX = (copyCoords.x / imageWidthAndHeight.width) * 100;
+    const normalizedCoordRaftManX = 5.12;
 
-    const normalizeRaftManY = (copyCoords.y / imageWidthAndHeight.height) * 100;
+    const normalizedCoordRaftManY = 42.18;
 
-    // console.log(
-    //   "Normalized X",
-    //   normalizeRaftManX,
-    //   "Normalized Y",
-    //   normalizeRaftManY,
-    // );
+    const normalizedCoordDragonX = 66.27;
+
+    const normalizedCoordDragonY = 42.51;
+
+    const normalizedCoordWizardX = 75.87;
+
+    const normalizedCoordWizardY = 65.85;
 
     const findLowerBoundX =
       ((copyCoords.x - divideTargetingBox) / imageWidthAndHeight.width) * 100;
@@ -80,7 +109,7 @@ function App() {
     const findLowerBoundY =
       ((copyCoords.y - divideTargetingBox) / imageWidthAndHeight.height) * 100;
 
-    // console.log(findLowerBoundX, findLowerBoundY);
+    console.log(findLowerBoundX, findLowerBoundY);
 
     const findUpperBoundX =
       ((copyCoords.x + divideTargetingBox) / imageWidthAndHeight.width) * 100;
@@ -88,17 +117,39 @@ function App() {
     const findUpperBoundY =
       ((copyCoords.y + divideTargetingBox) / imageWidthAndHeight.height) * 100;
 
-    // console.log(findUpperBoundX, findUpperBoundY);
+    console.log(findUpperBoundX, findUpperBoundY);
 
     // if (
-    //   normalizeRaftManX <= findLowerBoundX ||
-    //   normalizeRaftManX >= findUpperBoundX ||
-    //   normalizeRaftManY <= findLowerBoundY ||
-    //   normalizeRaftManY >= findUpperBoundY
+    //   normalizedCoordRaftManX <= findLowerBoundX ||
+    //   normalizedCoordRaftManX >= findUpperBoundX ||
+    //   normalizedCoordRaftManY <= findLowerBoundY ||
+    //   normalizedCoordRaftManY >= findUpperBoundY
     // ) {
     //   console.log("Target not found");
     // } else {
     //   console.log("You found Raft Man");
+    // }
+
+    // if (
+    //   normalizedCoordDragonX <= findLowerBoundX ||
+    //   normalizedCoordDragonX >= findUpperBoundX ||
+    //   normalizedCoordDragonY <= findLowerBoundY ||
+    //   normalizedCoordDragonY >= findUpperBoundY
+    // ) {
+    //   console.log("Target not found");
+    // } else {
+    //   console.log("You found Dragon.");
+    // }
+
+    // if (
+    //   normalizedCoordWizardX <= findLowerBoundX ||
+    //   normalizedCoordWizardX >= findUpperBoundX ||
+    //   normalizedCoordWizardY <= findLowerBoundY ||
+    //   normalizedCoordWizardY >= findUpperBoundY
+    // ) {
+    //   console.log("Target not found");
+    // } else {
+    //   console.log("You found Wizard.");
     // }
   }
 
