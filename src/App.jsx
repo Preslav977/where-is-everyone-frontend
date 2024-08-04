@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 
 import NavComponent from "./components/NavComponent";
 import MainComponent from "./components/MainComponent";
@@ -41,10 +41,6 @@ function App() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
-      // console.log("Width", rect.width, "Height", rect.height);
-
-      // console.log(rect);
-
       const retrieveAndSetCoordinates = {
         ...coordinates,
         x: event.clientX - rect.left,
@@ -76,7 +72,7 @@ function App() {
     return () => window.removeEventListener("click", getCoordinates);
   });
 
-  function normalizeCoordinates() {
+  async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
 
     // console.log(coordinates);
@@ -100,7 +96,32 @@ function App() {
       upperY: findUpperBoundY,
     };
 
-    console.log(mousePositionsObject);
+    // console.log(mousePositionsObject);
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/character/:coordinates",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: character._id,
+            lowerX: mousePositionsObject.lowerX,
+            upperX: mousePositionsObject.upperX,
+            lowerY: mousePositionsObject.lowerY,
+            upperY: mousePositionsObject.upperY,
+          }),
+        },
+      );
+
+      const result = await response.json();
+
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   if (loading) {
@@ -110,8 +131,6 @@ function App() {
   if (error) {
     return <p>A network error was encountered</p>;
   }
-
-  console.log(characters);
 
   return (
     <>
@@ -127,46 +146,55 @@ function App() {
         thirdCharImgDesc="Dragon character"
         thirdCharName={characters[2].character_name}
       />
-      <div
-        style={{
-          display: "none",
-        }}
-        ref={dropdownRef}
-        onClick={normalizeCoordinates}
-      >
-        <div className="dropDownContent">
-          <div
-            style={{
-              transform: `translate(${coordinates.x - centerTargetingBox}px, ${coordinates.y - centerTargetingBox}px)`,
-            }}
-            className="dropDownTargetingBox"
-          >
-            <div className="targetingBoxDot"></div>
-          </div>
-          <div
-            style={{
-              transform: `translate(${coordinates.x - centerTargetingBox}px, ${coordinates.y - centerTargetingBox}px)`,
-            }}
-            className="dropDownMenu"
-          >
-            {characters.map((character) => (
-              <DropDownMenuContent
-                key={character._id}
-                characterImgSrc={character.character_image}
-                characterImgDesc="Dragon Charmer Island characters"
-                characterName={character.character_name}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
       <MainComponent
         gameImgSrc={characters[0].photo.image_link}
         gameImgDesc="Dragon Charmers Island Game"
-      />
+      >
+        <div
+          style={{
+            display: "none",
+            position: "absolute",
+            left: `${coordinates.x - 35}px`,
+            top: `${coordinates.y - 35}px`,
+          }}
+          ref={dropdownRef}
+        >
+          <div className="dropDownContent">
+            <div className="dropDownTargetingBox">
+              <div className="targetingBoxDot"></div>
+            </div>
+            <div
+              style={{
+                left: `${coordinates.x - 35}px`,
+                top: `${coordinates.y - 35}px`,
+              }}
+              className="dropDownMenu"
+            >
+              {characters.map((character) => (
+                <Fragment key={character._id}>
+                  {!character.marked ? (
+                    <DropDownMenuContent
+                      onClick={() => normalizeCoordinates(character)}
+                      key={character._id}
+                      characterImgSrc={character.character_image}
+                      characterImgDesc="Dragon Charmer Island characters"
+                      characterName={character.character_name}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      </MainComponent>
       <FooterComponent />
     </>
   );
 }
 
 export default App;
+
+//  gameImgSrc={characters[0].photo.image_link}
+//         gameImgDesc="Dragon Charmers Island Game"

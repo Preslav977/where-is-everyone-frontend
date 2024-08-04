@@ -1,5 +1,6 @@
-main {
+.mainContainer {
   background-color: #0b0d22;
+  position: relative;
 }
 
 .mainComponentImg {
