@@ -118,7 +118,15 @@ function App() {
 
       const result = await response.json();
 
-      console.log(result);
+      // setCharacters([...characters, result]);
+
+      const refetchCharacters = await fetch("http://localhost:3000/character", {
+        mode: "cors",
+      });
+
+      const characters = await refetchCharacters.json();
+
+      setCharacters([...characters]);
     } catch (err) {
       console.log(err);
     }
@@ -150,6 +158,30 @@ function App() {
         gameImgSrc={characters[0].photo.image_link}
         gameImgDesc="Dragon Charmers Island Game"
       >
+        {characters.map((character) =>
+          character.marked ? (
+            <div
+              style={{
+                position: "absolute",
+                left: `${character.coordinateX}%`,
+                top: `${character.coordinateY}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+              key={character._id}
+            >
+              <img
+                style={{
+                  width: "20px",
+                  height: "20px",
+                }}
+                src="character-found.svg"
+                alt=""
+              />
+            </div>
+          ) : (
+            ""
+          ),
+        )}
         <div
           style={{
             display: "none",
@@ -195,6 +227,3 @@ function App() {
 }
 
 export default App;
-
-//  gameImgSrc={characters[0].photo.image_link}
-//         gameImgDesc="Dragon Charmers Island Game"
