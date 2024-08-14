@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import NavComponent from "./components/NavComponent";
 import MainComponent from "./components/MainComponent";
@@ -7,7 +7,8 @@ import DropDownMenuContent from "./components/DropDownMenuContent";
 import "./App.css";
 
 function App() {
-  const [characters, setCharacters] = useState([]);
+  const [photoCharacters, setPhotoCharacters] = useState();
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -16,8 +17,16 @@ function App() {
     height: 0,
   });
 
+  const [sessionId, setSessionId] = useState(0);
+
+  const [timer, setTimer] = useState(0);
+
+  const [isRunning, setIsRunning] = useState(false);
+
+  const timeInterval = useRef(null);
+
   useEffect(() => {
-    fetch("http://localhost:3000/character", {
+    fetch("http://localhost:3000/photos", {
       mode: "cors",
     })
       .then((response) => {
@@ -26,14 +35,50 @@ function App() {
         }
         return response.json();
       })
-      .then((response) => setCharacters(response))
+      .then((response) => setPhotoCharacters(response))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, [setCharacters]);
+  }, [setPhotoCharacters]);
+
+  function startTimer() {
+    if (isRunning) return;
+    setIsRunning(true);
+    timeInterval.current = setInterval(() => {
+      setTimer((count) => count + 1);
+    }, 10);
+  }
+
+  function pauseTimer() {
+    if (!isRunning) return;
+    setIsRunning(false);
+    clearInterval(timeInterval.current);
+  }
+
+  function resetTimer() {
+    setIsRunning(false);
+    clearInterval(timeInterval.current);
+    setTimer(0);
+  }
+
+  function formatTime(timer) {
+    const minutes = Math.floor(timer / 60000)
+      .toString()
+      .padStart(2, "0");
+    const seconds = Math.floor((timer / 1000) % 60)
+      .toString()
+      .padStart(2, "0");
+    const milliseconds = Math.floor(timer % 1000)
+      .toString()
+      .padStart(3, "0");
+
+    return { minutes, seconds, milliseconds };
+  }
+
+  const { minutes, seconds, milliseconds } = formatTime(timer);
 
   const targetingBoxDimension = 70;
 
-  const centerTargetingBox = targetingBoxDimension / 2;
+  const findCenterTargetingBox = targetingBoxDimension / 2;
 
   const dropdownRef = useRef(null);
 
@@ -72,22 +117,46 @@ function App() {
     return () => window.removeEventListener("click", getCoordinates);
   });
 
+  async function startGame() {
+    try {
+      const response = await fetch("http://localhost:3000/session/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          photo: "66b9dca06513a8945e55bc90",
+        }),
+      });
+
+      const result = await response.json();
+
+      console.log(result);
+
+      setSessionId(result._id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
 
-    // console.log(coordinates);
-
     const findLowerBoundX =
-      ((copyCoords.x - centerTargetingBox) / imageWidthAndHeight.width) * 100;
+      ((copyCoords.x - findCenterTargetingBox) / imageWidthAndHeight.width) *
+      100;
 
     const findLowerBoundY =
-      ((copyCoords.y - centerTargetingBox) / imageWidthAndHeight.height) * 100;
+      ((copyCoords.y - findCenterTargetingBox) / imageWidthAndHeight.height) *
+      100;
 
     const findUpperBoundX =
-      ((copyCoords.x + centerTargetingBox) / imageWidthAndHeight.width) * 100;
+      ((copyCoords.x + findCenterTargetingBox) / imageWidthAndHeight.width) *
+      100;
 
     const findUpperBoundY =
-      ((copyCoords.y + centerTargetingBox) / imageWidthAndHeight.height) * 100;
+      ((copyCoords.y + findCenterTargetingBox) / imageWidthAndHeight.height) *
+      100;
 
     const mousePositionsObject = {
       lowerX: findLowerBoundX,
@@ -96,11 +165,9 @@ function App() {
       upperY: findUpperBoundY,
     };
 
-    // console.log(mousePositionsObject);
-
     try {
       const response = await fetch(
-        "http://localhost:3000/character/:coordinates",
+        "http://localhost:3000/characters/:coordinates",
         {
           method: "POST",
           headers: {
@@ -118,15 +185,44 @@ function App() {
 
       const result = await response.json();
 
-      // setCharacters([...characters, result]);
+      console.log(result);
 
-      const refetchCharacters = await fetch("http://localhost:3000/character", {
-        mode: "cors",
-      });
+      const refetchCharacters = await fetch(
+        "http://localhost:3000/characters",
+        {
+          mode: "cors",
+        },
+      );
 
       const characters = await refetchCharacters.json();
 
-      setCharacters([...characters]);
+      const updateCharacters = {
+        ...photoCharacters,
+        characters: characters,
+      };
+
+      setPhotoCharacters(updateCharacters);
+
+      try {
+        console.log(sessionId);
+        const endGame = await fetch("http://localhost:3000/session/:id", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: sessionId,
+          }),
+        });
+
+        const postEndGame = await endGame.json();
+
+        console.log(postEndGame);
+
+        pauseTimer();
+      } catch (err) {
+        console.log(err);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -143,31 +239,33 @@ function App() {
   return (
     <>
       <NavComponent
-        gameTime="0:00:00"
-        firstCharImg={characters[0].character_image}
+        gameTime={minutes + ":" + seconds + ":" + milliseconds}
+        firstCharImg={photoCharacters.characters[0].character_image}
         firstCharImgDesc="Raft Man character"
-        firstCharName={characters[0].character_name}
-        secondCharImg={characters[1].character_image}
+        firstCharName={photoCharacters.characters[0].character_name}
+        secondCharImg={photoCharacters.characters[1].character_image}
         secondCharImgDesc="Wizard character"
-        secondCharName={characters[1].character_name}
-        thirdCharImg={characters[2].character_image}
+        secondCharName={photoCharacters.characters[1].character_name}
+        thirdCharImg={photoCharacters.characters[2].character_image}
         thirdCharImgDesc="Dragon character"
-        thirdCharName={characters[2].character_name}
+        thirdCharName={photoCharacters.characters[2].character_name}
       />
       <MainComponent
-        gameImgSrc={characters[0].photo.image_link}
+        gameImgSrc={photoCharacters.image_link}
         gameImgDesc="Dragon Charmers Island Game"
+        onLoadTimer={startTimer}
+        onLoad={startGame}
       >
-        {characters.map((character) =>
+        {photoCharacters.characters.map((character) =>
           character.marked ? (
             <div
+              key={character._id}
               style={{
                 position: "absolute",
                 left: `${character.coordinateX}%`,
                 top: `${character.coordinateY}%`,
                 transform: "translate(-50%, -50%)",
               }}
-              key={character._id}
             >
               <img
                 style={{
@@ -202,21 +300,19 @@ function App() {
               }}
               className="dropDownMenu"
             >
-              {characters.map((character) => (
-                <Fragment key={character._id}>
-                  {!character.marked ? (
-                    <DropDownMenuContent
-                      onClick={() => normalizeCoordinates(character)}
-                      key={character._id}
-                      characterImgSrc={character.character_image}
-                      characterImgDesc="Dragon Charmer Island characters"
-                      characterName={character.character_name}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Fragment>
-              ))}
+              {photoCharacters.characters.map((character) =>
+                !character.marked ? (
+                  <DropDownMenuContent
+                    onClick={() => normalizeCoordinates(character)}
+                    key={character._id}
+                    characterImgSrc={character.character_image}
+                    characterImgDesc="Dragon Charmer Island characters"
+                    characterName={character.character_name}
+                  />
+                ) : (
+                  ""
+                ),
+              )}
             </div>
           </div>
         </div>
