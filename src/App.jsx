@@ -4,6 +4,7 @@ import NavComponent from "./components/NavComponent";
 import MainComponent from "./components/MainComponent";
 import FooterComponent from "./components/FooterComponent";
 import DropDownMenuContent from "./components/DropDownMenuContent";
+import Dialog from "./components/Dialog";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
 
   const timeInterval = useRef(null);
 
+  const [endGame, setEndGame] = useState(false);
+
+  const [score, setScore] = useState(0);
+
   useEffect(() => {
     fetch("http://localhost:3000/photos", {
       mode: "cors",
@@ -40,24 +45,71 @@ function App() {
       .finally(() => setLoading(false));
   }, [setPhotoCharacters]);
 
+  let startTimeAndCurrentTimeDifference = 0;
+
+  async function startGame() {
+    const newGameResponse = await fetch(
+      "http://localhost:3000/characters/reset",
+      {
+        method: "PUT",
+      },
+    );
+
+    const resultNewGame = await newGameResponse.json();
+
+    console.log(resultNewGame);
+
+    const refetchCharacters = await fetch("http://localhost:3000/characters", {
+      mode: "cors",
+    });
+
+    const characters = await refetchCharacters.json();
+
+    const updateCharacters = {
+      ...photoCharacters,
+      characters: characters,
+    };
+
+    setPhotoCharacters(updateCharacters);
+
+    try {
+      const response = await fetch("http://localhost:3000/session/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          photo: "66b9dca06513a8945e55bc90",
+        }),
+      });
+
+      const result = await response.json();
+
+      const startTime = Date.parse(result.startTime);
+
+      const currentTime = new Date();
+
+      startTimeAndCurrentTimeDifference =
+        startTime.getTime() - currentTime.getTime();
+
+      setSessionId(result._id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   function startTimer() {
     if (isRunning) return;
     setIsRunning(true);
     timeInterval.current = setInterval(() => {
       setTimer((count) => count + 1);
-    }, 10);
+    }, startTimeAndCurrentTimeDifference);
   }
 
   function pauseTimer() {
     if (!isRunning) return;
     setIsRunning(false);
     clearInterval(timeInterval.current);
-  }
-
-  function resetTimer() {
-    setIsRunning(false);
-    clearInterval(timeInterval.current);
-    setTimer(0);
   }
 
   function formatTime(timer) {
@@ -116,28 +168,6 @@ function App() {
     window.addEventListener("click", getCoordinates);
     return () => window.removeEventListener("click", getCoordinates);
   });
-
-  async function startGame() {
-    try {
-      const response = await fetch("http://localhost:3000/session/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          photo: "66b9dca06513a8945e55bc90",
-        }),
-      });
-
-      const result = await response.json();
-
-      console.log(result);
-
-      setSessionId(result._id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
@@ -204,7 +234,6 @@ function App() {
       setPhotoCharacters(updateCharacters);
 
       try {
-        console.log(sessionId);
         const endGame = await fetch("http://localhost:3000/session/:id", {
           method: "PUT",
           headers: {
@@ -219,7 +248,18 @@ function App() {
 
         console.log(postEndGame);
 
+        let elapsedTime =
+          Date.parse(postEndGame.endTime) - Date.parse(postEndGame.startTime);
+
+        let calculateScore = elapsedTime / 1000;
+
+        setScore(calculateScore);
+
+        console.log(score);
+
         pauseTimer();
+
+        setEndGame(true);
       } catch (err) {
         console.log(err);
       }
@@ -253,9 +293,11 @@ function App() {
       <MainComponent
         gameImgSrc={photoCharacters.image_link}
         gameImgDesc="Dragon Charmers Island Game"
-        onLoadTimer={startTimer}
         onLoad={startGame}
+        onLoadTimer={startTimer}
+        className={!endGame ? "mainContainer" : "mainContainerFixed"}
       >
+        {endGame ? <Dialog playerScore={`${score}s`} /> : ""}
         {photoCharacters.characters.map((character) =>
           character.marked ? (
             <div
@@ -290,15 +332,19 @@ function App() {
           ref={dropdownRef}
         >
           <div className="dropDownContent">
-            <div className="dropDownTargetingBox">
-              <div className="targetingBoxDot"></div>
+            <div
+              className={`${!endGame ? "dropDownTargetingBox" : "hideDropDownTargetingBox"}`}
+            >
+              <div
+                className={`${!endGame ? "targetingBoxDot" : "hideTargetingBoxDot"}`}
+              ></div>
             </div>
             <div
               style={{
                 left: `${coordinates.x - 35}px`,
                 top: `${coordinates.y - 35}px`,
               }}
-              className="dropDownMenu"
+              className={`${!endGame ? "dropDownMenu" : "hideDropDownMenu"}`}
             >
               {photoCharacters.characters.map((character) =>
                 !character.marked ? (

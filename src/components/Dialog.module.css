@@ -1,0 +1,55 @@
+.dialogContent {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  padding: 0.5rem 1rem;
+  background-color: #0b0b22;
+  border-radius: 10px;
+  border: #0b0b22;
+  color: #fff;
+  line-height: 1.8;
+}
+
+.dialogFlexContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  gap: 0.2rem;
+}
+
+.dialogFlexContainer input {
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 0.2rem 0;
+  border-color: white;
+  color: #fff;
+}
+
+form p,
+label {
+  color: #94a3b8;
+}
+
+.dialogContent p {
+  margin-bottom: 0.5rem;
+}
+
+.dialogSubmitBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dialogSubmitBtnContainer button {
+  padding: 0.8em 2em;
+  background-color: #4ce1d7;
+  color: #0b0b22;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.dialogSubmitBtnContainer button:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}

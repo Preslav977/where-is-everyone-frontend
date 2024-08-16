@@ -7,9 +7,10 @@ function MainComponent({
   children,
   onLoad,
   onLoadTimer,
+  className,
 }) {
   return (
-    <main className={style.mainContainer}>
+    <main className={className}>
       <img
         onLoad={() => {
           onLoad(), onLoadTimer();
@@ -29,6 +30,7 @@ MainComponent.propTypes = {
   children: PropTypes.array,
   onLoad: PropTypes.func,
   onLoadTimer: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default MainComponent;
