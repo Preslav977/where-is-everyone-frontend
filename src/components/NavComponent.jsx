@@ -12,6 +12,7 @@ function NavComponent({
   thirdCharImg,
   thirdCharImgDesc,
   thirdCharName,
+  leaderBoardLink,
 }) {
   return (
     <nav className={style.navContainer}>
@@ -47,7 +48,12 @@ function NavComponent({
           <p className={style.navContentFlexCharName}>{thirdCharName}</p>
         </div>
       </div>
-      <button></button>
+      <div className={style.leaderBoardAndThemeBtnContainer}>
+        <a href="/leaderboard">{leaderBoardLink}</a>
+        <div>
+          <button>Btn</button>
+        </div>
+      </div>
     </nav>
   );
 }
@@ -63,6 +69,7 @@ NavComponent.propTypes = {
   thirdCharImg: PropTypes.string,
   thirdCharImgDesc: PropTypes.string,
   thirdCharName: PropTypes.string,
+  leaderBoardLink: PropTypes.string,
 };
 
 export default NavComponent;

@@ -33,6 +33,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  visibility: hidden;
 }
 
 .navContentFlexCharName {
@@ -47,4 +48,9 @@
 .navContentFlexCharImg {
   height: 50px;
   width: 50px;
+}
+
+.leaderBoardAndThemeBtnContainer {
+  display: flex;
+  gap: 1rem;
 }
