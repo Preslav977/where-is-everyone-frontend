@@ -1,5 +1,8 @@
 import style from "./NavComponent.module.css";
 import PropTypes from "prop-types";
+import { SingleGameContext } from "../App";
+import { useContext } from "react";
+import DropDownMenuContent from "./DropDownMenuContent";
 
 function NavComponent({
   gameTime,
@@ -13,7 +16,14 @@ function NavComponent({
   thirdCharImgDesc,
   thirdCharName,
   leaderBoardLink,
+  visibilityStyle,
 }) {
+  const [singleGame, setSingleGame] = useContext(SingleGameContext);
+
+  const filterUnmarkedCharacters = singleGame.characters.filter(
+    (character) => !character.marked,
+  ).length;
+
   return (
     <nav className={style.navContainer}>
       <button className={style.navContentHomeBtn}>
@@ -23,7 +33,12 @@ function NavComponent({
       </button>
       <p className={style.navContentGameTime}>{gameTime}</p>
       <div className={style.navContentFlexCharWrapper}>
-        <div className={style.navContentFlexCharContainer}>
+        <div
+          className={style.navContentFlexCharContainer}
+          style={{
+            visibility: visibilityStyle,
+          }}
+        >
           <img
             className={style.navContentFlexCharImg}
             src={firstCharImg}
@@ -31,7 +46,12 @@ function NavComponent({
           />
           <p className={style.navContentFlexCharName}>{firstCharName}</p>
         </div>
-        <div className={style.navContentFlexCharContainer}>
+        <div
+          className={style.navContentFlexCharContainer}
+          style={{
+            visibility: visibilityStyle,
+          }}
+        >
           <img
             className={style.navContentFlexCharImg}
             src={secondCharImg}
@@ -39,7 +59,12 @@ function NavComponent({
           />
           <p className={style.navContentFlexCharName}>{secondCharName}</p>
         </div>
-        <div className={style.navContentFlexCharContainer}>
+        <div
+          className={style.navContentFlexCharContainer}
+          style={{
+            visibility: visibilityStyle,
+          }}
+        >
           <img
             className={style.navContentFlexCharImg}
             src={thirdCharImg}
@@ -49,7 +74,7 @@ function NavComponent({
         </div>
       </div>
       <div className={style.leaderBoardAndThemeBtnContainer}>
-        <a href="/leaderboard">{leaderBoardLink}</a>
+        <a href={leaderBoardLink}>Leaderboard</a>
         <div>
           <button>Btn</button>
         </div>
@@ -70,6 +95,7 @@ NavComponent.propTypes = {
   thirdCharImgDesc: PropTypes.string,
   thirdCharName: PropTypes.string,
   leaderBoardLink: PropTypes.string,
+  visibilityStyle: PropTypes.string,
 };
 
 export default NavComponent;

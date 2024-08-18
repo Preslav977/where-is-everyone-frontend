@@ -2,9 +2,11 @@ import style from "./FetchGames.module.css";
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../App";
 import GameComponent from "../GameComponent";
+import NavComponent from "../NavComponent";
 
 function FetchGames() {
   const [games, setGames] = useContext(GameContext);
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,20 +37,26 @@ function FetchGames() {
     </div>;
 
   return (
-    <main className={style.mainGameContainer}>
-      <section className={style.mainGameSection}>
-        <h2>Games</h2>
-        {games.map((game) => (
-          <GameComponent
-            key={game._id}
-            gameImg={game.image_link}
-            gameImgDesc={"Dragon Charmers Island"}
-            gameName={"Dragon Charmers Island"}
-            gameId={game._id}
-          />
-        ))}
-      </section>
-    </main>
+    <>
+      <NavComponent
+        leaderBoardLink={"/leaderboard"}
+        visibilityStyle={"hidden"}
+      />
+      <main className={style.mainGameContainer}>
+        <section className={style.mainGameSection}>
+          <h2>Games</h2>
+          {games.map((game) => (
+            <GameComponent
+              key={game._id}
+              gameImg={game.image_link}
+              gameImgDesc={"Dragon Charmers Island"}
+              gameName={"Dragon Charmers Island"}
+              gameId={game._id}
+            />
+          ))}
+        </section>
+      </main>
+    </>
   );
 }
 

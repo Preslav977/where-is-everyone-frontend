@@ -22,7 +22,7 @@ function Dialog({ playerScore, onSubmit }) {
 }
 
 Dialog.propTypes = {
-  playerScore: PropTypes.number,
+  playerScore: PropTypes.string,
   onSubmit: PropTypes.func,
 };
 
