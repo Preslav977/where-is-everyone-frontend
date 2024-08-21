@@ -253,8 +253,6 @@ function FetchSingleGame() {
 
         let calculateScore = elapsedTime / 1000;
 
-        console.log(calculateScore);
-
         setScore(calculateScore);
 
         pauseTimer();
@@ -291,6 +289,27 @@ function FetchSingleGame() {
       const result = await response.json();
 
       console.log(result);
+
+      try {
+        const leaderBoardResponse = await fetch(
+          "http://localhost:3000/leaderboard/:id",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: singleGame.leaderboard._id,
+              userId: result._id,
+            }),
+          },
+        );
+        const resultLeaderBoard = await leaderBoardResponse.json();
+
+        console.log(resultLeaderBoard);
+      } catch (err) {
+        console.log(err);
+      }
     } catch (err) {
       console.log(err);
     }

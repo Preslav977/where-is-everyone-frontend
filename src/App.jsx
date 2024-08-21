@@ -8,6 +8,8 @@ export const GameContext = createContext(null);
 
 export const SingleGameContext = createContext(null);
 
+export const MainMenuContext = createContext(null);
+
 function App() {
   const [games, setGames] = useState([]);
 
@@ -20,6 +22,7 @@ function App() {
           <Outlet />
         </GameContext.Provider>
       </SingleGameContext.Provider>
+
       <FooterComponent />
     </>
   );

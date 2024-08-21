@@ -1,8 +1,6 @@
 import style from "./NavComponent.module.css";
 import PropTypes from "prop-types";
-import { SingleGameContext } from "../App";
-import { useContext } from "react";
-import DropDownMenuContent from "./DropDownMenuContent";
+import { Link } from "react-router-dom";
 
 function NavComponent({
   gameTime,
@@ -18,18 +16,12 @@ function NavComponent({
   leaderBoardLink,
   visibilityStyle,
 }) {
-  const [singleGame, setSingleGame] = useContext(SingleGameContext);
-
-  const filterUnmarkedCharacters = singleGame.characters.filter(
-    (character) => !character.marked,
-  ).length;
-
   return (
     <nav className={style.navContainer}>
       <button className={style.navContentHomeBtn}>
-        <a href="/">
+        <Link to="/">
           Character<span className={style.navLinkSpan}>Hunt</span>
-        </a>
+        </Link>
       </button>
       <p className={style.navContentGameTime}>{gameTime}</p>
       <div className={style.navContentFlexCharWrapper}>

@@ -47,11 +47,13 @@ function FetchGames() {
           <h2>Games</h2>
           {games.map((game) => (
             <GameComponent
+              prop={game._id}
               key={game._id}
               gameImg={game.image_link}
               gameImgDesc={"Dragon Charmers Island"}
               gameName={"Dragon Charmers Island"}
               gameId={game._id}
+              gameButton={"Start Game"}
             />
           ))}
         </section>
