@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import FetchGames from "../components/api/FetchGames";
 import FetchSingleGame from "../components/api/FetchSingleGame";
-import FetchGameAndLeaderBoard from "../components/api/FetchGameAndLeaderBoard";
+import LeaderBoardTable from "../components/api/LeaderBoardTable";
 
 const router = createBrowserRouter([
   {
@@ -20,15 +20,12 @@ const router = createBrowserRouter([
       {
         path: "/leaderboard",
         element: <FetchGames />,
-      },
-      {
-        path: "/leaderboard/:id",
-        element: (
-          <>
-            <FetchGames />
-            <FetchGameAndLeaderBoard />
-          </>
-        ),
+        children: [
+          {
+            path: ":id",
+            element: <LeaderBoardTable />,
+          },
+        ],
       },
     ],
   },

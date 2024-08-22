@@ -1,14 +1,17 @@
 import App from "../App";
 import FetchGames from "../components/api/FetchGames";
 import FetchSingleGame from "../components/api/FetchSingleGame";
-import FetchGameAndLeaderBoard from "../components/api/FetchGameAndLeaderBoard";
+import LeaderBoardTable from "../components/api/LeaderBoardTable";
 
 const routes = [
   {
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <FetchGames /> },
+      {
+        index: true,
+        element: <FetchGames />,
+      },
       {
         path: "/:id",
         element: <FetchSingleGame />,
@@ -16,15 +19,12 @@ const routes = [
       {
         path: "/leaderboard",
         element: <FetchGames />,
-      },
-      {
-        path: "/leaderboard/:id",
-        element: (
-          <>
-            <FetchGames />
-            <FetchGameAndLeaderBoard />
-          </>
-        ),
+        children: [
+          {
+            path: ":id",
+            element: <LeaderBoardTable />,
+          },
+        ],
       },
     ],
   },
