@@ -5,6 +5,7 @@ import DropDownMenuContent from "../DropDownMenuContent";
 import Dialog from "../Dialog";
 import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
+import style from "../NavComponent.module.css";
 
 function FetchSingleGame() {
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
@@ -317,10 +318,11 @@ function FetchSingleGame() {
 
   if (loading)
     return (
-      <div>
-        <p data-testid="loading">Loading....</p>
+      <div className="loadingContainer">
+        <img className="loading" src="loading.svg" alt="" />
       </div>
     );
+
   if (error)
     <div>
       return <p>A network error was encountered</p>
@@ -328,25 +330,35 @@ function FetchSingleGame() {
 
   return (
     <>
-      <NavComponent
-        gameTime={minutes + ":" + seconds + ":" + milliseconds}
-        firstCharImg={singleGame.characters[0].character_image}
-        firstCharImgDesc={"Raft Man"}
-        firstCharName={singleGame.characters[0].character_name}
-        secondCharImg={singleGame.characters[1].character_image}
-        secondCharImgDesc={"Dragon"}
-        secondCharName={singleGame.characters[1].character_name}
-        thirdCharImg={singleGame.characters[2].character_image}
-        thirdCharImgDesc={"Wizard"}
-        thirdCharName={singleGame.characters[2].character_name}
-        leaderBoardLink={"/leaderboard"}
-      />
+      <NavComponent gameTime={minutes + ":" + seconds + ":" + milliseconds}>
+        {singleGame.characters.map((character) => (
+          <div
+            key={character._id}
+            className={style.navContentFlexCharContainer}
+          >
+            <img
+              className={style.navContentFlexCharImg}
+              src={character.character_image}
+              alt={"Characters"}
+            />
+            {!character.marked ? (
+              <p className={style.navContentFlexCharName}>
+                {character.character_name}
+              </p>
+            ) : (
+              <p className={style.navContentFlexCharNameMarked}>
+                {character.character_name}
+              </p>
+            )}
+          </div>
+        ))}
+      </NavComponent>
       <MainComponent
         gameImgSrc={singleGame.image_link}
         gameImgDesc="Dragon Charmers Island Game"
         onLoadTimer={startTimer}
         onLoad={startGame}
-        className={!endGame ? "mainContainer" : "mainContainerFixed"}
+        position={endGame ? "fixed" : ""}
       >
         {endGame ? (
           <Dialog onSubmit={declareWinner} playerScore={`${score}s`} />

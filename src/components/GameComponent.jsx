@@ -7,22 +7,25 @@ function GameComponent({
   gameImgDesc,
   gameName,
   gameId,
-  gameButton,
   onClick,
-  prop,
+  onClickGlow,
+  gameLink,
+  showButton,
 }) {
   return (
-    <div className={style.gameContainer}>
+    <div onClick={onClickGlow} className={style.gameContainer}>
       <div onClick={onClick} className={style.gameImgContainer}>
-        <Link to={prop}>
+        <a href={gameLink}>
           <img className={style.gameImage} src={gameImg} alt={gameImgDesc} />
-        </Link>
+        </a>
       </div>
       <div className={style.gameDescription}>
         <h3>{gameName}</h3>
-        <div className={style.gameDescriptionLinkContainer}>
-          <Link to={gameId}>{gameButton}</Link>
-        </div>
+        {showButton && (
+          <div className={style.gameDescriptionLinkContainer}>
+            <a href={gameId}>Start Game</a>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -33,7 +36,9 @@ GameComponent.propTypes = {
   gameImgDesc: PropTypes.string,
   gameName: PropTypes.string,
   gameId: PropTypes.string,
-  gameButton: PropTypes.string,
+  onClick: PropTypes.func,
+  gameLink: PropTypes.string,
+  showButton: PropTypes.bool,
 };
 
 export default GameComponent;

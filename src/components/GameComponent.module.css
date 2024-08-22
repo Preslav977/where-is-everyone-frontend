@@ -32,3 +32,12 @@
   border: 0;
   border-radius: 0.5rem;
 }
+
+.gameDescriptionLinkContainer {
+  transition: transform 400ms;
+}
+
+.gameDescriptionLinkContainer:hover {
+  transition: ease-in-out 150ms;
+  transform: translateY(-5px);
+}

@@ -51,10 +51,11 @@ function FetchGames() {
 
   if (loading)
     return (
-      <div>
-        <p data-testid="loading">Loading....</p>
+      <div className="loadingContainer">
+        <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
+
   if (error)
     <div>
       return <p>A network error was encountered</p>
@@ -63,10 +64,7 @@ function FetchGames() {
   if (singleGame === undefined) {
     return (
       <>
-        <NavComponent
-          leaderBoardLink={"/leaderboard"}
-          visibilityStyle={"hidden"}
-        />
+        <NavComponent leaderBoardLink={"/leaderboard"} />
         <>
           <main className={style.mainGameContainer}>
             <section className={style.mainGameSection}>
@@ -74,13 +72,13 @@ function FetchGames() {
               {games.map((game) => (
                 <GameComponent
                   onClick={() => fetchGameId(game)}
-                  prop={game._id}
+                  gameLink={game._id}
                   key={game._id}
                   gameImg={game.image_link}
                   gameImgDesc={"Dragon Charmers Island"}
                   gameName={"Dragon Charmers Island"}
                   gameId={game._id}
-                  gameButton={"Start Game"}
+                  showButton={true}
                 />
               ))}
             </section>
@@ -91,10 +89,7 @@ function FetchGames() {
   } else {
     return (
       <>
-        <NavComponent
-          leaderBoardLink={"/leaderboard"}
-          visibilityStyle={"hidden"}
-        />
+        <NavComponent leaderBoardLink={"/leaderboard"} />
         <>
           <main className={style.mainGameContainer}>
             <section className={style.mainGameSection}>
@@ -102,13 +97,13 @@ function FetchGames() {
               {games.map((game) => (
                 <GameComponent
                   onClick={() => fetchGameId(game)}
-                  prop={game._id}
+                  gameLink={game._id}
                   key={game._id}
                   gameImg={game.image_link}
                   gameImgDesc={"Dragon Charmers Island"}
                   gameName={"Dragon Charmers Island"}
                   gameId={game._id}
-                  gameButton={"Start Game"}
+                  showButton={false}
                 />
               ))}
               <LeaderBoardTable>
