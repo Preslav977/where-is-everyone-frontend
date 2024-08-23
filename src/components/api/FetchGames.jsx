@@ -5,6 +5,7 @@ import GameComponent from "../GameComponent";
 import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import LeaderBoardTable from "./LeaderBoardTable";
+import { format } from "date-fns";
 
 function FetchGames() {
   const [games, setGames] = useContext(GameContext);
@@ -29,6 +30,8 @@ function FetchGames() {
   }, [setGames]);
 
   async function fetchGameId(game) {
+    console.log(game);
+
     try {
       const response = await fetch(`http://localhost:3000/photos/${game._id}`, {
         mode: "cors",
@@ -64,61 +67,58 @@ function FetchGames() {
   if (singleGame === undefined) {
     return (
       <>
-        <NavComponent leaderBoardLink={"/leaderboard"} />
-        <>
-          <main className={style.mainGameContainer}>
-            <section className={style.mainGameSection}>
-              <h2>Games</h2>
-              {games.map((game) => (
-                <GameComponent
-                  onClick={() => fetchGameId(game)}
-                  gameLink={game._id}
-                  key={game._id}
-                  gameImg={game.image_link}
-                  gameImgDesc={"Dragon Charmers Island"}
-                  gameName={"Dragon Charmers Island"}
-                  gameId={game._id}
-                  showButton={true}
-                />
-              ))}
-            </section>
-          </main>
-        </>
+        <NavComponent showLeaderBoardLink={true} />
+
+        <main className={style.mainGameContainer}>
+          <section className={style.mainGameSection}>
+            <h2>Games</h2>
+            {games.map((game) => (
+              <GameComponent
+                onClick={() => fetchGameId(game)}
+                gameLink={game._id}
+                key={game._id}
+                gameImg={game.image_link}
+                gameImgDesc={"Dragon Charmers Island"}
+                gameName={"Dragon Charmers Island"}
+                gameId={game._id}
+                showButton={true}
+              />
+            ))}
+          </section>
+        </main>
       </>
     );
   } else {
     return (
       <>
-        <NavComponent leaderBoardLink={"/leaderboard"} />
-        <>
-          <main className={style.mainGameContainer}>
-            <section className={style.mainGameSection}>
-              <h2>Games</h2>
-              {games.map((game) => (
-                <GameComponent
-                  onClick={() => fetchGameId(game)}
-                  gameLink={game._id}
-                  key={game._id}
-                  gameImg={game.image_link}
-                  gameImgDesc={"Dragon Charmers Island"}
-                  gameName={"Dragon Charmers Island"}
-                  gameId={game._id}
-                  showButton={false}
-                />
+        <NavComponent showLeaderBoardLink={true} />
+        <main className={style.mainGameContainer}>
+          <section className={style.mainGameSection}>
+            <h2>Leaderboard</h2>
+            {games.map((game) => (
+              <GameComponent
+                onClick={() => fetchGameId(game)}
+                gameLink={game._id}
+                key={game._id}
+                gameImg={game.image_link}
+                gameImgDesc={"Dragon Charmers Island"}
+                gameName={"Dragon Charmers Island"}
+                gameId={game._id}
+                showButton={false}
+              />
+            ))}
+            <LeaderBoardTable>
+              {singleGame.leaderboard.users.map((user, index) => (
+                <tr key={user._id}>
+                  <td>{index + 1}</td>
+                  <td>{user.username}</td>
+                  <td>{user.score + "s"}</td>
+                  <td>{format(Date.parse(user.date), "MMM dd, yyyy")}</td>
+                </tr>
               ))}
-              <LeaderBoardTable>
-                {singleGame.leaderboard.users.map((user, index) => (
-                  <tr key={user._id}>
-                    <td>{index + 1}</td>
-                    <td>{user.username}</td>
-                    <td>{user.score}</td>
-                    <td>{user.date}</td>
-                  </tr>
-                ))}
-              </LeaderBoardTable>
-            </section>
-          </main>
-        </>
+            </LeaderBoardTable>
+          </section>
+        </main>
       </>
     );
   }

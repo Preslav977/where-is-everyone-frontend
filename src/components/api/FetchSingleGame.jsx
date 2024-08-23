@@ -330,7 +330,10 @@ function FetchSingleGame() {
 
   return (
     <>
-      <NavComponent gameTime={minutes + ":" + seconds + ":" + milliseconds}>
+      <NavComponent
+        gameTime={minutes + ":" + seconds + ":" + milliseconds}
+        showLeaderBoardLink={false}
+      >
         {singleGame.characters.map((character) => (
           <div
             key={character._id}

@@ -1,4 +1,5 @@
 .mainComponentImg {
   width: 100%;
   height: auto;
+  cursor: crosshair;
 }

@@ -1,18 +1,20 @@
-import style from "./LeaderBoard.module.css";
+import style from "./LeaderBoardTable.module.css";
 
 function LeaderBoardTable({ children }) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Place</th>
-          <th>Username</th>
-          <th>Score</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
+    <div className={style.a}>
+      <table>
+        <thead>
+          <tr>
+            <td>Place</td>
+            <td>Username</td>
+            <td>Score</td>
+            <td>Date</td>
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </table>
+    </div>
   );
 }
 

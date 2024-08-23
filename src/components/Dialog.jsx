@@ -10,7 +10,13 @@ function Dialog({ playerScore, onSubmit }) {
           <p>Submit your score to the leaderboard</p>
           <div className={style.dialogFlexContainer}>
             <label htmlFor="username">Username</label>
-            <input type="text" name="username" />
+            <input
+              type="text"
+              name="username"
+              minLength={1}
+              maxLength={30}
+              required
+            />
           </div>
           <div className={style.dialogSubmitBtnContainer}>
             <button>Submit</button>

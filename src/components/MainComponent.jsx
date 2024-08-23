@@ -17,6 +17,7 @@ function MainComponent({
           display: "flex",
           justifyContent: "center",
           position: "relative",
+          // backgroundColor: "#0b0d22",
         }}
       >
         <div style={{ position: position, backgroundColor: "#0b0d22" }}>

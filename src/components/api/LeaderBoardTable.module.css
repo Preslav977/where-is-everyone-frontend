@@ -1,0 +1,31 @@
+.a {
+  max-width: 750px;
+  margin-top: 3.5em;
+  color: white;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+table {
+  outline: 2px solid white;
+  color: white;
+  display: table;
+  width: 100%;
+}
+
+td {
+  padding: 1rem;
+  text-align: center;
+}
+
+thead {
+  background-color: #1e293b;
+}
+
+table,
+td,
+th {
+  border-collapse: collapse;
+  /* border: 1px solid white; */
+  color: #e8e6f6;
+}

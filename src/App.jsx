@@ -22,7 +22,6 @@ function App() {
           <Outlet />
         </GameContext.Provider>
       </SingleGameContext.Provider>
-
       <FooterComponent />
     </>
   );
