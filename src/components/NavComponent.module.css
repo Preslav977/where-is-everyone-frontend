@@ -7,11 +7,7 @@
   background-color: #0b0d22;
 }
 
-.navLinkSpan {
-  color: #4ce1d7;
-}
-
-.navContentHomeBtn {
+.ulContainer {
   font-size: 1.25rem;
   border: 0;
   padding: 0.8em;
@@ -19,10 +15,8 @@
   color: white;
 }
 
-.navContentHomeBtn:hover,
-.leaderboardLinkContainer:hover {
-  background-color: #ffffff1a;
-  transition: ease-in-out 0.75s;
+.navLinkSpan {
+  color: #4ce1d7;
 }
 
 .navContentGameTime {
@@ -61,29 +55,69 @@
   transition: 250ms;
 }
 
+.leaderBoardAndThemeBtnContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.leaderBoardLink {
+  font-size: 1.2rem;
+}
+
+.leaderBoardLinkContainer {
+  padding: 0.7em 0.2em;
+}
+
 .navContentFlexCharImg:hover {
   transform: perspective(200px) translateZ(30px);
 }
 
-.leaderBoardAndThemeBtnContainer {
+.ulContainer:hover,
+.leaderBoardLinkContainer:hover {
+  background-color: #ffffff1a;
+  transition: ease-in-out 0.75s;
+}
+
+.navDropDownContainer {
+  position: relative;
+}
+
+.ulDropDownContent {
+  width: 30px;
+  height: 30px;
+  background-color: #991b1b;
+  border-radius: 50%;
   display: flex;
-  gap: 1rem;
   align-items: center;
+  justify-content: center;
+  color: #fff;
 }
 
-.leaderboardLink {
-  font-size: 1.2rem;
-  /* padding: 2em 0em; */
+.liDropDownContent {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  top: 32px;
+  left: -20px;
 }
 
-.leaderboardLinkContainer {
-  padding: 0.7em 0.2em;
+.ulDropDownContent:hover {
+  cursor: pointer;
 }
 
-/* @media screen and (max-width: 770px) {
-  .navContainer {
-    flex-direction: column;
-    gap: 1rem;
-    user-select: none;
+@media screen and (max-width: 710px) {
+  .navContentFlexCharWrapper {
+    display: none;
   }
-} */
+}
+
+@media screen and (min-width: 710px) {
+  .navContainer {
+    display: flex;
+  }
+
+  .navDropDownContainer {
+    display: none;
+  }
+}

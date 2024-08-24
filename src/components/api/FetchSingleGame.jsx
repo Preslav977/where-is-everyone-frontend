@@ -17,6 +17,8 @@ function FetchSingleGame() {
     height: 0,
   });
 
+  const imgRef = useRef(null);
+
   const [sessionId, setSessionId] = useState(0);
 
   const [timer, setTimer] = useState(0);
@@ -139,15 +141,22 @@ function FetchSingleGame() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
+      // console.log(e.target.tagName);
+
       const retrieveAndSetCoordinates = {
         ...coordinates,
         x: event.clientX - rect.left,
         y: event.clientY - rect.top,
       };
 
+      // console.log(imgRef.current.className);
+
       setCoordinates(retrieveAndSetCoordinates);
 
-      if (dropdownRef.current.style.display === "none") {
+      if (
+        e.target.tagName === "IMG" &&
+        dropdownRef.current.style.display === "none"
+      ) {
         dropdownRef.current.style.display = "flex";
       } else {
         dropdownRef.current.style.display = "none";
@@ -357,6 +366,7 @@ function FetchSingleGame() {
         ))}
       </NavComponent>
       <MainComponent
+        prop={imgRef}
         gameImgSrc={singleGame.image_link}
         gameImgDesc="Dragon Charmers Island Game"
         onLoadTimer={startTimer}

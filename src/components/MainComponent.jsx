@@ -9,6 +9,7 @@ function MainComponent({
   onLoadTimer,
   className,
   position,
+  prop,
 }) {
   return (
     <main className={className}>
@@ -22,6 +23,7 @@ function MainComponent({
       >
         <div style={{ position: position, backgroundColor: "#0b0d22" }}>
           <img
+            ref={prop}
             onLoad={() => {
               onLoad(), onLoadTimer();
             }}
