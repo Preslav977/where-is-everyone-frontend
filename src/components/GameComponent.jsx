@@ -3,26 +3,30 @@ import style from "./GameComponent.module.css";
 import PropTypes from "prop-types";
 
 function GameComponent({
-  gameImg,
-  gameImgDesc,
-  gameName,
-  gameId,
   onClick,
   gameLink,
+  gameImage,
+  gameImageDescription,
+  gameName,
   showButton,
+  gameID,
 }) {
   return (
     <div onClick={onClick} className={style.gameContainer}>
       <div className={style.gameImgContainer}>
-        <Link to={"/leaderboard/" + gameLink}>
-          <img className={style.gameImage} src={gameImg} alt={gameImgDesc} />
+        <Link to={"/leaderboard/" + gameID}>
+          <img
+            className={style.gameImage}
+            src={gameImage}
+            alt={gameImageDescription}
+          />
         </Link>
       </div>
       <div className={style.gameDescription}>
         <h3>{gameName}</h3>
         {showButton && (
           <div className={style.gameDescriptionLinkContainer}>
-            <a href={gameId}>Start Game</a>
+            <a href={gameLink}>Start Game</a>
           </div>
         )}
       </div>
@@ -31,10 +35,10 @@ function GameComponent({
 }
 
 GameComponent.propTypes = {
-  gameImg: PropTypes.string,
-  gameImgDesc: PropTypes.string,
+  gameImage: PropTypes.string,
+  gameImageDescription: PropTypes.string,
   gameName: PropTypes.string,
-  gameId: PropTypes.string,
+  gameID: PropTypes.string,
   onClick: PropTypes.func,
   gameLink: PropTypes.string,
   showButton: PropTypes.bool,

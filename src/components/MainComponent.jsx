@@ -2,50 +2,44 @@ import style from "./MainComponent.module.css";
 import PropTypes from "prop-types";
 
 function MainComponent({
-  gameImgSrc,
-  gameImgDesc,
+  gameImageSrc,
+  gameImageDescription,
   children,
   onLoad,
   onLoadTimer,
   className,
   position,
-  prop,
+  useRefProp,
 }) {
   return (
     <main className={className}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          position: "relative",
-          // backgroundColor: "#0b0d22",
-        }}
-      >
-        <div style={{ position: position, backgroundColor: "#0b0d22" }}>
+      <section className={style.mainGameSectionWrapper}>
+        <div className={style.mainGameContent} style={{ position: position }}>
           <img
-            ref={prop}
+            ref={useRefProp}
             onLoad={() => {
               onLoad(), onLoadTimer();
             }}
             className={style.mainComponentImg}
-            src={gameImgSrc}
-            alt={gameImgDesc}
+            src={gameImageSrc}
+            alt={gameImageDescription}
           />
           {children}
         </div>
-      </div>
+      </section>
     </main>
   );
 }
 
 MainComponent.propTypes = {
-  gameImgSrc: PropTypes.string,
-  gameImgDesc: PropTypes.string,
+  gameImageSrc: PropTypes.string,
+  gameImageDescription: PropTypes.string,
   children: PropTypes.array,
   onLoad: PropTypes.func,
   onLoadTimer: PropTypes.func,
   className: PropTypes.string,
   position: PropTypes.string,
+  useRefProp: PropTypes.object,
 };
 
 export default MainComponent;

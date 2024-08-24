@@ -6,30 +6,35 @@ import Dialog from "../Dialog";
 import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import style from "../NavComponent.module.css";
+import { useNavigate } from "react-router-dom";
 
 function FetchSingleGame() {
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [imageWidthAndHeight, setImageWidthAndHeight] = useState({
     width: 0,
     height: 0,
   });
 
-  const imgRef = useRef(null);
+  const [error, setError] = useState(null);
 
-  const [sessionId, setSessionId] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const [timer, setTimer] = useState(0);
+  const gameImageRef = useRef(null);
 
-  const [isRunning, setIsRunning] = useState(false);
+  const [gameSessionID, setGameSessionID] = useState(0);
+
+  const [gameTimer, setGameTimer] = useState(0);
+
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const timeInterval = useRef(null);
 
-  const [endGame, setEndGame] = useState(false);
+  const [checkIfGameIsFinished, setCheckIfGameIsFinished] = useState(false);
 
-  const [score, setScore] = useState(0);
+  const [playerScore, setPlayerScore] = useState(0);
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -48,7 +53,51 @@ function FetchSingleGame() {
       .finally(() => setLoading(false));
   }, [id, setSingleGame]);
 
-  let startTimeAndCurrentTimeDifference = 0;
+  let calculateStartAndCurrentTime = 0;
+
+  const targetingBoxDimension = 70;
+
+  const centerTargetingBox = targetingBoxDimension / 2;
+
+  const targetingBoxAndCharactersDropDownRef = useRef(null);
+
+  useEffect(() => {
+    function getCoordinates(e) {
+      const rect = e.target.getBoundingClientRect();
+
+      const retrieveAndSetCoordinates = {
+        ...coordinates,
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      };
+
+      setCoordinates(retrieveAndSetCoordinates);
+
+      if (
+        e.target.tagName === "IMG" &&
+        targetingBoxAndCharactersDropDownRef.current.style.display === "none"
+      ) {
+        targetingBoxAndCharactersDropDownRef.current.style.display = "flex";
+      } else {
+        targetingBoxAndCharactersDropDownRef.current.style.display = "none";
+      }
+
+      const retrieveAndSetImageDimensions = {
+        ...imageWidthAndHeight,
+        width: rect.width,
+        height: rect.height,
+      };
+
+      if (rect.width === 5 && rect.height === 5) {
+        return;
+      } else {
+        setImageWidthAndHeight(retrieveAndSetImageDimensions);
+      }
+    }
+
+    window.addEventListener("click", getCoordinates);
+    return () => window.removeEventListener("click", getCoordinates);
+  });
 
   async function startGame() {
     const newGameResponse = await fetch(
@@ -76,127 +125,77 @@ function FetchSingleGame() {
     setSingleGame(updateCharacters);
 
     try {
-      const response = await fetch("http://localhost:3000/session/", {
+      const response = await fetch("http://localhost:3000/session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          photo: "66b9dca06513a8945e55bc90",
+          photo: singleGame._id,
         }),
       });
 
       const result = await response.json();
 
+      console.log(result);
+
       const startTime = new Date(result.startTime);
 
       const currentTime = new Date();
 
-      startTimeAndCurrentTimeDifference =
+      calculateStartAndCurrentTime =
         startTime.getTime() - currentTime.getTime();
 
-      setSessionId(result._id);
+      setGameSessionID(result._id);
     } catch (err) {
       console.log(err);
     }
   }
 
   function startTimer() {
-    if (isRunning) return;
-    setIsRunning(true);
+    if (isTimerRunning) return;
+    setIsTimerRunning(true);
     timeInterval.current = setInterval(() => {
-      setTimer((count) => count + 1);
-    }, startTimeAndCurrentTimeDifference);
+      setGameTimer((count) => count + 1);
+    }, calculateStartAndCurrentTime);
   }
 
   function pauseTimer() {
-    if (!isRunning) return;
-    setIsRunning(false);
+    if (!isTimerRunning) return;
+    setIsTimerRunning(false);
     clearInterval(timeInterval.current);
   }
 
-  function formatTime(timer) {
-    const minutes = Math.floor(timer / 60000)
+  function formatTime(gameTimer) {
+    const minutes = Math.floor(gameTimer / 60000)
       .toString()
       .padStart(2, "0");
-    const seconds = Math.floor((timer / 1000) % 60)
+    const seconds = Math.floor((gameTimer / 1000) % 60)
       .toString()
       .padStart(2, "0");
-    const milliseconds = Math.floor(timer % 1000)
+    const milliseconds = Math.floor(gameTimer % 1000)
       .toString()
       .padStart(3, "0");
 
     return { minutes, seconds, milliseconds };
   }
 
-  const { minutes, seconds, milliseconds } = formatTime(timer);
-
-  const targetingBoxDimension = 70;
-
-  const findCenterTargetingBox = targetingBoxDimension / 2;
-
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    function getCoordinates(e) {
-      const rect = e.target.getBoundingClientRect();
-
-      // console.log(e.target.tagName);
-
-      const retrieveAndSetCoordinates = {
-        ...coordinates,
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-      };
-
-      // console.log(imgRef.current.className);
-
-      setCoordinates(retrieveAndSetCoordinates);
-
-      if (
-        e.target.tagName === "IMG" &&
-        dropdownRef.current.style.display === "none"
-      ) {
-        dropdownRef.current.style.display = "flex";
-      } else {
-        dropdownRef.current.style.display = "none";
-      }
-
-      const retrieveAndSetImageDimensions = {
-        ...imageWidthAndHeight,
-        width: rect.width,
-        height: rect.height,
-      };
-
-      if (rect.width === 5 && rect.height === 5) {
-        return;
-      } else {
-        setImageWidthAndHeight(retrieveAndSetImageDimensions);
-      }
-    }
-
-    window.addEventListener("click", getCoordinates);
-    return () => window.removeEventListener("click", getCoordinates);
-  });
+  const { minutes, seconds, milliseconds } = formatTime(gameTimer);
 
   async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
 
     const findLowerBoundX =
-      ((copyCoords.x - findCenterTargetingBox) / imageWidthAndHeight.width) *
-      100;
+      ((copyCoords.x - centerTargetingBox) / imageWidthAndHeight.width) * 100;
 
     const findLowerBoundY =
-      ((copyCoords.y - findCenterTargetingBox) / imageWidthAndHeight.height) *
-      100;
+      ((copyCoords.y - centerTargetingBox) / imageWidthAndHeight.height) * 100;
 
     const findUpperBoundX =
-      ((copyCoords.x + findCenterTargetingBox) / imageWidthAndHeight.width) *
-      100;
+      ((copyCoords.x + centerTargetingBox) / imageWidthAndHeight.width) * 100;
 
     const findUpperBoundY =
-      ((copyCoords.y + findCenterTargetingBox) / imageWidthAndHeight.height) *
-      100;
+      ((copyCoords.y + centerTargetingBox) / imageWidthAndHeight.height) * 100;
 
     const mousePositionsObject = {
       lowerX: findLowerBoundX,
@@ -244,30 +243,32 @@ function FetchSingleGame() {
       setSingleGame(updateCharacters);
 
       try {
-        const endGame = await fetch("http://localhost:3000/session/:id", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
+        const checkIfGameIsDone = await fetch(
+          "http://localhost:3000/session/:id",
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: gameSessionID,
+            }),
           },
-          body: JSON.stringify({
-            id: sessionId,
-          }),
-        });
+        );
 
-        const postEndGame = await endGame.json();
+        const checkIfGameIsDoneJSON = await checkIfGameIsDone.json();
 
-        console.log(postEndGame);
+        let calculateElapsedTime =
+          Date.parse(checkIfGameIsDoneJSON.endTime) -
+          Date.parse(checkIfGameIsDoneJSON.startTime);
 
-        let elapsedTime =
-          Date.parse(postEndGame.endTime) - Date.parse(postEndGame.startTime);
+        let calculatePlayerScore = calculateElapsedTime / 1000;
 
-        let calculateScore = elapsedTime / 1000;
-
-        setScore(calculateScore);
+        setPlayerScore(calculatePlayerScore);
 
         pauseTimer();
 
-        setEndGame(true);
+        setCheckIfGameIsFinished(true);
       } catch (err) {
         console.log(err);
       }
@@ -281,8 +282,6 @@ function FetchSingleGame() {
 
     const username = Form.get("username");
 
-    console.log(score);
-
     try {
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
@@ -291,7 +290,7 @@ function FetchSingleGame() {
         },
         body: JSON.stringify({
           username: username,
-          score: score,
+          score: playerScore,
           photo: singleGame._id,
         }),
       });
@@ -317,6 +316,8 @@ function FetchSingleGame() {
         const resultLeaderBoard = await leaderBoardResponse.json();
 
         console.log(resultLeaderBoard);
+
+        navigate(`/leaderboard/${singleGame._id}`);
       } catch (err) {
         console.log(err);
       }
@@ -366,15 +367,15 @@ function FetchSingleGame() {
         ))}
       </NavComponent>
       <MainComponent
-        prop={imgRef}
-        gameImgSrc={singleGame.image_link}
-        gameImgDesc="Dragon Charmers Island Game"
+        useRefProp={gameImageRef}
+        gameImageSrc={singleGame.image_link}
+        gameImageDescription="Dragon Charmers Island Game"
         onLoadTimer={startTimer}
         onLoad={startGame}
-        position={endGame ? "fixed" : ""}
+        position={checkIfGameIsFinished ? "fixed" : ""}
       >
-        {endGame ? (
-          <Dialog onSubmit={declareWinner} playerScore={`${score}s`} />
+        {checkIfGameIsFinished ? (
+          <Dialog onSubmit={declareWinner} playerScore={`${playerScore}s`} />
         ) : (
           ""
         )}
@@ -392,10 +393,10 @@ function FetchSingleGame() {
               <img
                 style={{
                   width: "20px",
-                  height: "20px",
+                  height: "20x",
                 }}
                 src="character-found.svg"
-                alt=""
+                alt="Marker on found character"
               />
             </div>
           ) : (
@@ -406,33 +407,33 @@ function FetchSingleGame() {
           style={{
             display: "none",
             position: "absolute",
-            left: `${coordinates.x - 35}px`,
-            top: `${coordinates.y - 35}px`,
+            left: `${coordinates.x - centerTargetingBox}px`,
+            top: `${coordinates.y - centerTargetingBox}px`,
           }}
-          ref={dropdownRef}
+          ref={targetingBoxAndCharactersDropDownRef}
         >
           <div className="dropDownContent">
             <div
-              className={`${!endGame ? "dropDownTargetingBox" : "hideDropDownTargetingBox"}`}
+              className={`${!checkIfGameIsFinished ? "dropDownTargetingBox" : "hideDropDownTargetingBox"}`}
             >
               <div
-                className={`${!endGame ? "targetingBoxDot" : "hideTargetingBoxDot"}`}
+                className={`${!checkIfGameIsFinished ? "targetingBoxDot" : "hideTargetingBoxDot"}`}
               ></div>
             </div>
             <div
               style={{
-                left: `${coordinates.x - 35}px`,
-                top: `${coordinates.y - 35}px`,
+                left: `${coordinates.x - centerTargetingBox}px`,
+                top: `${coordinates.y - centerTargetingBox}px`,
               }}
-              className={`${!endGame ? "dropDownMenu" : "hideDropDownMenu"}`}
+              className={`${!checkIfGameIsFinished ? "dropDownMenu" : "hideDropDownMenu"}`}
             >
               {singleGame.characters.map((character) =>
                 !character.marked ? (
                   <DropDownMenuContent
                     onClick={() => normalizeCoordinates(character)}
                     key={character._id}
-                    characterImgSrc={character.character_image}
-                    characterImgDesc="Dragon Charmer Island characters"
+                    characterImageSrc={character.character_image}
+                    characterImageDescription="Dragon Charmer Island Characters"
                     characterName={character.character_name}
                   />
                 ) : (

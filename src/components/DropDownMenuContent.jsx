@@ -2,8 +2,8 @@ import style from "./DropDownMenuContent.module.css";
 import PropTypes from "prop-types";
 
 function DropDownMenuContent({
-  characterImgSrc,
-  characterImgDesc,
+  characterImageSrc,
+  characterImageDescription,
   characterName,
   onClick,
 }) {
@@ -11,8 +11,8 @@ function DropDownMenuContent({
     <div onClick={onClick} className={style.dropDownCharacterContainer}>
       <img
         className={style.dropDownCharacterImg}
-        src={characterImgSrc}
-        alt={characterImgDesc}
+        src={characterImageSrc}
+        alt={characterImageDescription}
       />
       <p>{characterName}</p>
     </div>
@@ -20,8 +20,8 @@ function DropDownMenuContent({
 }
 
 DropDownMenuContent.propTypes = {
-  characterImgSrc: PropTypes.string,
-  characterImgDesc: PropTypes.string,
+  characterImageSrc: PropTypes.string,
+  characterImageDescription: PropTypes.string,
   characterName: PropTypes.string,
   onClick: PropTypes.func,
 };

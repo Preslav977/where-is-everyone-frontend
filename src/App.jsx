@@ -1,14 +1,11 @@
 import { useState, createContext } from "react";
-
+import { Outlet } from "react-router-dom";
 import FooterComponent from "./components/FooterComponent";
 import "./App.css";
-import { Outlet } from "react-router-dom";
 
-export const GameContext = createContext(null);
+export const AllGamesContext = createContext(null);
 
 export const SingleGameContext = createContext(null);
-
-export const MainMenuContext = createContext(null);
 
 function App() {
   const [games, setGames] = useState([]);
@@ -18,9 +15,9 @@ function App() {
   return (
     <>
       <SingleGameContext.Provider value={[singleGame, setSingleGame]}>
-        <GameContext.Provider value={[games, setGames]}>
+        <AllGamesContext.Provider value={[games, setGames]}>
           <Outlet />
-        </GameContext.Provider>
+        </AllGamesContext.Provider>
       </SingleGameContext.Provider>
       <FooterComponent />
     </>

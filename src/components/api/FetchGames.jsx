@@ -1,6 +1,6 @@
 import style from "./FetchGames.module.css";
 import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../../App";
+import { AllGamesContext } from "../../App";
 import GameComponent from "../GameComponent";
 import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
@@ -8,7 +8,7 @@ import LeaderBoardTable from "./LeaderBoardTable";
 import { format } from "date-fns";
 
 function FetchGames() {
-  const [games, setGames] = useContext(GameContext);
+  const [games, setGames] = useContext(AllGamesContext);
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
 
   const [error, setError] = useState(null);
@@ -29,9 +29,7 @@ function FetchGames() {
       .finally(() => setLoading(false));
   }, [setGames]);
 
-  async function fetchGameId(game) {
-    console.log(game);
-
+  async function getGameIdOnClick(game) {
     try {
       const response = await fetch(`http://localhost:3000/photos/${game._id}`, {
         mode: "cors",
@@ -39,14 +37,12 @@ function FetchGames() {
 
       const singleGame = await response.json();
 
-      const obj = {
+      const updateSingleGameObject = {
         ...singleGame,
         singleGame,
       };
 
-      setSingleGame(obj);
-
-      console.log(singleGame);
+      setSingleGame(updateSingleGameObject);
     } catch (err) {
       console.log(err);
     }
@@ -68,20 +64,19 @@ function FetchGames() {
     return (
       <>
         <NavComponent showLeaderBoardLink={true} />
-
         <main className={style.mainGameContainer}>
           <section className={style.mainGameSection}>
-            <h2>Games</h2>
+            <h2 className={style.mainGameHeader}>Games</h2>
             {games.map((game) => (
               <GameComponent
-                onClick={() => fetchGameId(game)}
-                gameLink={game._id}
                 key={game._id}
-                gameImg={game.image_link}
-                gameImgDesc={"Dragon Charmers Island"}
+                onClick={() => getGameIdOnClick(game)}
+                gameLink={game._id}
+                gameImage={game.image_link}
+                gameImageDescription={"Dragon Charmers Island"}
                 gameName={"Dragon Charmers Island"}
-                gameId={game._id}
                 showButton={true}
+                gameID={game._id}
               />
             ))}
           </section>
@@ -94,16 +89,15 @@ function FetchGames() {
         <NavComponent showLeaderBoardLink={true} />
         <main className={style.mainGameContainer}>
           <section className={style.mainGameSection}>
-            <h2>Leaderboard</h2>
+            <h2 className={style.mainGameHeader}>Leaderboard</h2>
             {games.map((game) => (
               <GameComponent
-                onClick={() => fetchGameId(game)}
-                gameLink={game._id}
                 key={game._id}
-                gameImg={game.image_link}
-                gameImgDesc={"Dragon Charmers Island"}
+                onClick={() => getGameIdOnClick(game)}
+                gameLink={game._id}
+                gameImage={game.image_link}
+                gameImageDescription={"Dragon Charmers Island"}
                 gameName={"Dragon Charmers Island"}
-                gameId={game._id}
                 showButton={false}
               />
             ))}

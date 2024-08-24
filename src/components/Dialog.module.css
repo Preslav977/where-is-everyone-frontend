@@ -12,6 +12,15 @@
   line-height: 1.8;
 }
 
+.dialogContent p {
+  margin-bottom: 0.5rem;
+}
+
+form p,
+label {
+  color: #94a3b8;
+}
+
 .dialogFlexContainer {
   display: flex;
   flex-direction: column;
@@ -25,15 +34,6 @@
   padding: 0.2rem 0;
   border-color: white;
   color: #fff;
-}
-
-form p,
-label {
-  color: #94a3b8;
-}
-
-.dialogContent p {
-  margin-bottom: 0.5rem;
 }
 
 .dialogSubmitBtnContainer {

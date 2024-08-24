@@ -10,7 +10,7 @@
   flex-grow: 1;
 }
 
-.mainGameSection h2 {
+.mainGameHeader {
   text-align: center;
   color: #fff;
   margin-bottom: 1rem;

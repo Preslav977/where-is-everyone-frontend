@@ -1,5 +1,5 @@
 import style from "./NavComponent.module.css";
-import "../App.css";
+
 import PropTypes from "prop-types";
 
 import { SingleGameContext } from "../App";
@@ -65,8 +65,8 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
               !character.marked ? (
                 <DropDownMenuContent
                   key={character._id}
-                  characterImgSrc={character.character_image}
-                  characterImgDesc="Dragon Charmer Island characters"
+                  characterImageSrc={character.character_image}
+                  characterImageDescription="Dragon Charmer Island characters"
                   characterName={character.character_name}
                 />
               ) : (

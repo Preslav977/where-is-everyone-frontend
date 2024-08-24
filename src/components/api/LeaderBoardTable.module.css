@@ -1,4 +1,4 @@
-.a {
+.tableContainer {
   max-width: 750px;
   margin-top: 3.5em;
   color: white;
@@ -6,26 +6,25 @@
   padding: 0 1rem;
 }
 
-table {
+.table {
   outline: 2px solid white;
   color: white;
   display: table;
   width: 100%;
 }
 
-td {
+.tableCell {
   padding: 1rem;
   text-align: center;
 }
 
-thead {
+.tableHead {
   background-color: #1e293b;
 }
 
-table,
-td,
+.table,
+.tableCell,
 th {
   border-collapse: collapse;
-  /* border: 1px solid white; */
   color: #e8e6f6;
 }
