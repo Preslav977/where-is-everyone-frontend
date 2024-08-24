@@ -7,6 +7,7 @@ function MainComponent({
   children,
   onLoad,
   onLoadTimer,
+  onLoadTest,
   className,
   position,
   useRefProp,
@@ -18,7 +19,8 @@ function MainComponent({
           <img
             ref={useRefProp}
             onLoad={() => {
-              onLoad(), onLoadTimer();
+              onLoad();
+              onLoadTimer();
             }}
             className={style.mainComponentImg}
             src={gameImageSrc}

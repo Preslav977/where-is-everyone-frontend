@@ -15,7 +15,7 @@ function FetchGames() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/photos", {
+    fetch("http://localhost:3000/games", {
       mode: "cors",
     })
       .then((response) => {
@@ -31,7 +31,7 @@ function FetchGames() {
 
   async function getGameIdOnClick(game) {
     try {
-      const response = await fetch(`http://localhost:3000/photos/${game._id}`, {
+      const response = await fetch(`http://localhost:3000/game/${game._id}`, {
         mode: "cors",
       });
 
@@ -74,7 +74,7 @@ function FetchGames() {
                 gameLink={game._id}
                 gameImage={game.image_link}
                 gameImageDescription={"Dragon Charmers Island"}
-                gameName={"Dragon Charmers Island"}
+                gameName={game.game_name}
                 showButton={true}
                 gameID={game._id}
               />
@@ -97,7 +97,7 @@ function FetchGames() {
                 gameLink={game._id}
                 gameImage={game.image_link}
                 gameImageDescription={"Dragon Charmers Island"}
-                gameName={"Dragon Charmers Island"}
+                gameName={game.game_name}
                 showButton={false}
               />
             ))}

@@ -39,7 +39,7 @@ function FetchSingleGame() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/photos/${id}`, {
+    fetch(`http://localhost:3000/game/${id}`, {
       mode: "cors",
     })
       .then((response) => {
@@ -106,22 +106,17 @@ function FetchSingleGame() {
         method: "PUT",
       },
     );
-
     const resultNewGame = await newGameResponse.json();
-
     console.log(resultNewGame);
-
     const refetchCharacters = await fetch("http://localhost:3000/characters", {
       mode: "cors",
     });
-
     const characters = await refetchCharacters.json();
-
+    console.log(characters);
     const updateCharacters = {
       ...singleGame,
       characters: characters,
     };
-
     setSingleGame(updateCharacters);
 
     try {
@@ -131,7 +126,7 @@ function FetchSingleGame() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          photo: singleGame._id,
+          game: singleGame._id,
         }),
       });
 
@@ -352,7 +347,7 @@ function FetchSingleGame() {
             <img
               className={style.navContentFlexCharImg}
               src={character.character_image}
-              alt={"Characters"}
+              alt={"Dragon Charmers Island Characters"}
             />
             {!character.marked ? (
               <p className={style.navContentFlexCharName}>
@@ -369,9 +364,9 @@ function FetchSingleGame() {
       <MainComponent
         useRefProp={gameImageRef}
         gameImageSrc={singleGame.image_link}
-        gameImageDescription="Dragon Charmers Island Game"
-        onLoadTimer={startTimer}
-        onLoad={startGame}
+        gameImageDescription={singleGame.game_name}
+        onLoad={startTimer}
+        onLoadTimer={startGame}
         position={checkIfGameIsFinished ? "fixed" : ""}
       >
         {checkIfGameIsFinished ? (
