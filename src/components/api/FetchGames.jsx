@@ -15,7 +15,7 @@ function FetchGames() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/games", {
+    fetch("https://where-is-everyone-backend-production.up.railway.app/games", {
       mode: "cors",
     })
       .then((response) => {
@@ -31,9 +31,12 @@ function FetchGames() {
 
   async function getGameIdOnClick(game) {
     try {
-      const response = await fetch(`http://localhost:3000/game/${game._id}`, {
-        mode: "cors",
-      });
+      const response = await fetch(
+        `https://where-is-everyone-backend-production.up.railway.app/game/${game._id}`,
+        {
+          mode: "cors",
+        },
+      );
 
       const singleGame = await response.json();
 

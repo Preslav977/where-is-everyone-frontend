@@ -39,7 +39,7 @@ function FetchSingleGame() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/game/${id}`, {
+    fetch(`where-is-everyone-backend-production.up.railway.app/game/${id}`, {
       mode: "cors",
     })
       .then((response) => {
@@ -101,16 +101,19 @@ function FetchSingleGame() {
 
   async function startGame() {
     const newGameResponse = await fetch(
-      "http://localhost:3000/characters/reset",
+      "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
       {
         method: "PUT",
       },
     );
     const resultNewGame = await newGameResponse.json();
     console.log(resultNewGame);
-    const refetchCharacters = await fetch("http://localhost:3000/characters", {
-      mode: "cors",
-    });
+    const refetchCharacters = await fetch(
+      "https://where-is-everyone-backend-production.up.railway.app/characters",
+      {
+        mode: "cors",
+      },
+    );
     const characters = await refetchCharacters.json();
     console.log(characters);
     const updateCharacters = {
@@ -120,15 +123,18 @@ function FetchSingleGame() {
     setSingleGame(updateCharacters);
 
     try {
-      const response = await fetch("http://localhost:3000/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://where-is-everyone-backend-production.up.railway.app/session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            game: singleGame._id,
+          }),
         },
-        body: JSON.stringify({
-          game: singleGame._id,
-        }),
-      });
+      );
 
       const result = await response.json();
 
@@ -201,7 +207,7 @@ function FetchSingleGame() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/characters/:coordinates",
+        "https://where-is-everyone-backend-production.up.railway.app/characters/:coordinates",
         {
           method: "POST",
           headers: {
@@ -222,7 +228,7 @@ function FetchSingleGame() {
       console.log(result);
 
       const refetchCharacters = await fetch(
-        "http://localhost:3000/characters",
+        "https://where-is-everyone-backend-production.up.railway.app/characters",
         {
           mode: "cors",
         },
@@ -239,7 +245,7 @@ function FetchSingleGame() {
 
       try {
         const checkIfGameIsDone = await fetch(
-          "http://localhost:3000/session/:id",
+          "https://where-is-everyone-backend-production.up.railway.app/session/:id",
           {
             method: "PUT",
             headers: {
@@ -278,17 +284,20 @@ function FetchSingleGame() {
     const username = Form.get("username");
 
     try {
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://where-is-everyone-backend-production.up.railway.app/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            score: playerScore,
+            photo: singleGame._id,
+          }),
         },
-        body: JSON.stringify({
-          username: username,
-          score: playerScore,
-          photo: singleGame._id,
-        }),
-      });
+      );
 
       const result = await response.json();
 
@@ -296,7 +305,7 @@ function FetchSingleGame() {
 
       try {
         const leaderBoardResponse = await fetch(
-          "http://localhost:3000/leaderboard/:id",
+          "https://where-is-everyone-backend-production.up.railway.app/leaderboard/:id",
           {
             method: "POST",
             headers: {
