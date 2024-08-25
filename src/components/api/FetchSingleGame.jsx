@@ -39,18 +39,32 @@ function FetchSingleGame() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`where-is-everyone-backend-production.up.railway.app/game/${id}`, {
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Server Error");
-        }
-        return response.json();
-      })
-      .then((response) => setSingleGame(response))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+    fetch(
+      "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
+      {
+        method: "PUT",
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch(
+        `https://where-is-everyone-backend-production.up.railway.app/game/${id}`,
+        {
+          mode: "cors",
+        },
+      )
+        .then((response) => {
+          if (response.status >= 400) {
+            throw new Error("Server Error");
+          }
+          return response.json();
+        })
+        .then((response) => setSingleGame(response))
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false));
+    }, 2000);
   }, [id, setSingleGame]);
 
   let calculateStartAndCurrentTime = 0;
@@ -100,27 +114,27 @@ function FetchSingleGame() {
   });
 
   async function startGame() {
-    const newGameResponse = await fetch(
-      "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
-      {
-        method: "PUT",
-      },
-    );
-    const resultNewGame = await newGameResponse.json();
-    console.log(resultNewGame);
-    const refetchCharacters = await fetch(
-      "https://where-is-everyone-backend-production.up.railway.app/characters",
-      {
-        mode: "cors",
-      },
-    );
-    const characters = await refetchCharacters.json();
-    console.log(characters);
-    const updateCharacters = {
-      ...singleGame,
-      characters: characters,
-    };
-    setSingleGame(updateCharacters);
+    // const newGameResponse = await fetch(
+    //   "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
+    //   {
+    //     method: "PUT",
+    //   },
+    // );
+    // const resultNewGame = await newGameResponse.json();
+    // console.log(resultNewGame);
+    // const refetchCharacters = await fetch(
+    //   "https://where-is-everyone-backend-production.up.railway.app/characters",
+    //   {
+    //     mode: "cors",
+    //   },
+    // );
+    // const characters = await refetchCharacters.json();
+    // console.log(characters);
+    // const updateCharacters = {
+    //   ...singleGame,
+    //   characters: characters,
+    // };
+    // setSingleGame(updateCharacters);
 
     try {
       const response = await fetch(

@@ -1,16 +1,16 @@
-import style from "./LeaderBoardTable.module.css";
+import leaderboardStyle from "./LeaderBoardTable.module.css";
 import PropTypes from "prop-types";
 
 function LeaderBoardTable({ children }) {
   return (
-    <div className={style.tableContainer}>
-      <table className={style.table}>
-        <thead className={style.tableHead}>
+    <div className={leaderboardStyle.tableContainer}>
+      <table className={leaderboardStyle.table}>
+        <thead className={leaderboardStyle.tableHead}>
           <tr>
-            <td className={style.tableCell}>Place</td>
-            <td className={style.tableCell}>Username</td>
-            <td className={style.tableCell}>Score</td>
-            <td className={style.tableCell}>Date</td>
+            <td className={leaderboardStyle.tableCell}>Place</td>
+            <td className={leaderboardStyle.tableCell}>Username</td>
+            <td className={leaderboardStyle.tableCell}>Score</td>
+            <td className={leaderboardStyle.tableCell}>Date</td>
           </tr>
         </thead>
         <tbody>{children}</tbody>

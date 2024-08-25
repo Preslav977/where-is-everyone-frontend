@@ -6,6 +6,7 @@ import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import LeaderBoardTable from "./LeaderBoardTable";
 import { format } from "date-fns";
+import "./LeaderBoardTable.module.css";
 
 function FetchGames() {
   const [games, setGames] = useContext(AllGamesContext);
