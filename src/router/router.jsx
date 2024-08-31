@@ -3,6 +3,7 @@ import App from "../App";
 import FetchGames from "../components/api/FetchGames";
 import FetchSingleGame from "../components/api/FetchSingleGame";
 import LeaderBoardTable from "../components/api/LeaderBoardTable";
+import { fetchSingleGameCharactersLoader } from "../components/api/FetchSingleGame";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       {
         path: "/:id",
         element: <FetchSingleGame />,
+        loader: ({ params }) => fetchSingleGameCharactersLoader(params.id),
       },
       {
         path: "/leaderboard",

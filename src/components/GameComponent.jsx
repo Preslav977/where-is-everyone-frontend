@@ -4,17 +4,17 @@ import PropTypes from "prop-types";
 
 function GameComponent({
   onClick,
-  gameLink,
+  gameID,
   gameImage,
   gameImageDescription,
   gameName,
   showButton,
-  gameID,
+  gameLink,
 }) {
   return (
-    <div onClick={onClick} className={style.gameContainer}>
+    <div className={style.gameContainer}>
       <div className={style.gameImgContainer}>
-        <Link to={"/leaderboard/" + gameID}>
+        <Link to={""}>
           <img
             className={style.gameImage}
             src={gameImage}

@@ -6,7 +6,6 @@ import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import LeaderBoardTable from "./LeaderBoardTable";
 import { format } from "date-fns";
-import "./LeaderBoardTable.module.css";
 
 function FetchGames() {
   const [games, setGames] = useContext(AllGamesContext);
@@ -16,7 +15,7 @@ function FetchGames() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://where-is-everyone-backend-production.up.railway.app/games", {
+    fetch("http://localhost:3000/games", {
       mode: "cors",
     })
       .then((response) => {
@@ -30,27 +29,24 @@ function FetchGames() {
       .finally(() => setLoading(false));
   }, [setGames]);
 
-  async function getGameIdOnClick(game) {
-    try {
-      const response = await fetch(
-        `https://where-is-everyone-backend-production.up.railway.app/game/${game._id}`,
-        {
-          mode: "cors",
-        },
-      );
+  // async function getGameIdOnClick(game) {
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/game/${game._id}`, {
+  //       mode: "cors",
+  //     });
 
-      const singleGame = await response.json();
+  //     const singleGame = await response.json();
 
-      const updateSingleGameObject = {
-        ...singleGame,
-        singleGame,
-      };
+  //     const updateSingleGameObject = {
+  //       ...singleGame,
+  //       singleGame,
+  //     };
 
-      setSingleGame(updateSingleGameObject);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //     setSingleGame(updateSingleGameObject);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   if (loading)
     return (
@@ -69,18 +65,17 @@ function FetchGames() {
       <>
         <NavComponent showLeaderBoardLink={true} />
         <main className={style.mainGameContainer}>
+          <h2 className={style.mainGameHeader}>Games</h2>
           <section className={style.mainGameSection}>
-            <h2 className={style.mainGameHeader}>Games</h2>
             {games.map((game) => (
               <GameComponent
                 key={game._id}
-                onClick={() => getGameIdOnClick(game)}
-                gameLink={game._id}
+                // onClick={() => getGameIdOnClick(game)}
+                // gameID={game._id}
                 gameImage={game.image_link}
-                gameImageDescription={"Dragon Charmers Island"}
                 gameName={game.game_name}
                 showButton={true}
-                gameID={game._id}
+                gameLink={game._id}
               />
             ))}
           </section>
@@ -92,30 +87,44 @@ function FetchGames() {
       <>
         <NavComponent showLeaderBoardLink={true} />
         <main className={style.mainGameContainer}>
+          <h2 className={style.mainGameHeader}>Leaderboard</h2>
           <section className={style.mainGameSection}>
-            <h2 className={style.mainGameHeader}>Leaderboard</h2>
             {games.map((game) => (
               <GameComponent
                 key={game._id}
-                onClick={() => getGameIdOnClick(game)}
-                gameLink={game._id}
+                // onClick={() => getGameIdOnClick(game)}
+                // gameID={game._id}
                 gameImage={game.image_link}
-                gameImageDescription={"Dragon Charmers Island"}
                 gameName={game.game_name}
-                showButton={false}
+                showButton={true}
+                gameLink={game._id}
               />
             ))}
+          </section>
+          <div
+            style={{
+              textAlign: "center",
+              maxWidth: "1000px",
+              margin: "0 auto",
+              // outline: "2px solid white",
+              display: "flex",
+              flexDirection: "column",
+              alignContent: "center",
+              justifyItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
             <LeaderBoardTable>
               {singleGame.leaderboard.users.map((user, index) => (
                 <tr key={user._id}>
-                  <td>{index + 1}</td>
+                  <td className={style.tableCell}>{index + 1}</td>
                   <td>{user.username}</td>
                   <td>{user.score + "s"}</td>
                   <td>{format(Date.parse(user.date), "MMM dd, yyyy")}</td>
                 </tr>
               ))}
             </LeaderBoardTable>
-          </section>
+          </div>
         </main>
       </>
     );

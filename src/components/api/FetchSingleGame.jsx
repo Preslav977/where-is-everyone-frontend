@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import MainComponent from "../MainComponent";
 import DropDownMenuContent from "../DropDownMenuContent";
 import Dialog from "../Dialog";
@@ -9,16 +9,20 @@ import style from "../NavComponent.module.css";
 import { useNavigate } from "react-router-dom";
 
 function FetchSingleGame() {
+  const singleGameLoader = useLoaderData();
+
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
+
+  console.log(singleGame, singleGameLoader);
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [imageWidthAndHeight, setImageWidthAndHeight] = useState({
     width: 0,
     height: 0,
   });
-
-  const [error, setError] = useState(null);
-
-  const [loading, setLoading] = useState(true);
 
   const gameImageRef = useRef(null);
 
@@ -36,37 +40,6 @@ function FetchSingleGame() {
 
   const navigate = useNavigate();
 
-  const { id } = useParams();
-
-  useEffect(() => {
-    fetch(
-      "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
-      {
-        method: "PUT",
-      },
-    );
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      fetch(
-        `https://where-is-everyone-backend-production.up.railway.app/game/${id}`,
-        {
-          mode: "cors",
-        },
-      )
-        .then((response) => {
-          if (response.status >= 400) {
-            throw new Error("Server Error");
-          }
-          return response.json();
-        })
-        .then((response) => setSingleGame(response))
-        .catch((error) => setError(error))
-        .finally(() => setLoading(false));
-    }, 2000);
-  }, [id, setSingleGame]);
-
   let calculateStartAndCurrentTime = 0;
 
   const targetingBoxDimension = 70;
@@ -74,6 +47,23 @@ function FetchSingleGame() {
   const centerTargetingBox = targetingBoxDimension / 2;
 
   const targetingBoxAndCharactersDropDownRef = useRef(null);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/characters/${id}`, {
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Server Error");
+        }
+        return response.json();
+      })
+      .then((response) => setSingleGame(response))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  }, [id, setSingleGame]);
 
   useEffect(() => {
     function getCoordinates(e) {
@@ -114,54 +104,26 @@ function FetchSingleGame() {
   });
 
   async function startGame() {
-    // const newGameResponse = await fetch(
-    //   "https://where-is-everyone-backend-production.up.railway.app/characters/reset",
-    //   {
-    //     method: "PUT",
-    //   },
-    // );
-    // const resultNewGame = await newGameResponse.json();
-    // console.log(resultNewGame);
-    // const refetchCharacters = await fetch(
-    //   "https://where-is-everyone-backend-production.up.railway.app/characters",
-    //   {
-    //     mode: "cors",
-    //   },
-    // );
-    // const characters = await refetchCharacters.json();
-    // console.log(characters);
-    // const updateCharacters = {
-    //   ...singleGame,
-    //   characters: characters,
-    // };
-    // setSingleGame(updateCharacters);
-
     try {
-      const response = await fetch(
-        "https://where-is-everyone-backend-production.up.railway.app/session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            game: singleGame._id,
-          }),
+      const newGameSession = await fetch("http://localhost:3000/session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          game: singleGame._id,
+          characters: singleGameLoader,
+        }),
+      });
+      const newGameSessionResult = await newGameSession.json();
 
-      const result = await response.json();
+      console.log(newGameSessionResult);
 
-      console.log(result);
-
-      const startTime = new Date(result.startTime);
-
+      const startTime = new Date(newGameSessionResult.startTime);
       const currentTime = new Date();
-
       calculateStartAndCurrentTime =
         startTime.getTime() - currentTime.getTime();
-
-      setGameSessionID(result._id);
+      setGameSessionID(newGameSessionResult._id);
     } catch (err) {
       console.log(err);
     }
@@ -198,6 +160,8 @@ function FetchSingleGame() {
   const { minutes, seconds, milliseconds } = formatTime(gameTimer);
 
   async function normalizeCoordinates(character) {
+    console.log(character);
+
     const copyCoords = { ...coordinates };
 
     const findLowerBoundX =
@@ -220,15 +184,16 @@ function FetchSingleGame() {
     };
 
     try {
-      const response = await fetch(
-        "https://where-is-everyone-backend-production.up.railway.app/characters/:coordinates",
+      const markCharacterIfFound = await fetch(
+        "http://localhost:3000/session/:coordinates",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: character._id,
+            id: gameSessionID,
+            characterId: character._id,
             lowerX: mousePositionsObject.lowerX,
             upperX: mousePositionsObject.upperX,
             lowerY: mousePositionsObject.lowerY,
@@ -237,29 +202,22 @@ function FetchSingleGame() {
         },
       );
 
-      const result = await response.json();
+      const markCharacterIfFoundResult = await markCharacterIfFound.json();
 
-      console.log(result);
+      console.log(markCharacterIfFoundResult);
 
-      const refetchCharacters = await fetch(
-        "https://where-is-everyone-backend-production.up.railway.app/characters",
+      const refetchMarkedCharacters = await fetch(
+        "http://localhost:3000/session/:id",
         {
           mode: "cors",
         },
       );
 
-      const characters = await refetchCharacters.json();
-
-      const updateCharacters = {
-        ...singleGame,
-        characters: characters,
-      };
-
-      setSingleGame(updateCharacters);
+      const characters = await refetchMarkedCharacters.json();
 
       try {
         const checkIfGameIsDone = await fetch(
-          "https://where-is-everyone-backend-production.up.railway.app/session/:id",
+          "http://localhost:3000/session/:id",
           {
             method: "PUT",
             headers: {
@@ -271,11 +229,13 @@ function FetchSingleGame() {
           },
         );
 
-        const checkIfGameIsDoneJSON = await checkIfGameIsDone.json();
+        const checkIfGameIsDoneResult = await checkIfGameIsDone.json();
+
+        console.log(checkIfGameIsDone);
 
         let calculateElapsedTime =
-          Date.parse(checkIfGameIsDoneJSON.endTime) -
-          Date.parse(checkIfGameIsDoneJSON.startTime);
+          Date.parse(checkIfGameIsDoneResult.endTime) -
+          Date.parse(checkIfGameIsDoneResult.startTime);
 
         let calculatePlayerScore = calculateElapsedTime / 1000;
 
@@ -298,28 +258,24 @@ function FetchSingleGame() {
     const username = Form.get("username");
 
     try {
-      const response = await fetch(
-        "https://where-is-everyone-backend-production.up.railway.app/users",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            score: playerScore,
-            photo: singleGame._id,
-          }),
+      const createUser = await fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          username: username,
+          score: playerScore,
+        }),
+      });
 
-      const result = await response.json();
+      const createUserResult = await createUser.json();
 
-      console.log(result);
+      console.log(createUserResult);
 
       try {
-        const leaderBoardResponse = await fetch(
-          "https://where-is-everyone-backend-production.up.railway.app/leaderboard/:id",
+        const addPlayerToLeaderBoard = await fetch(
+          "http://localhost:3000/leaderboard/:id",
           {
             method: "POST",
             headers: {
@@ -327,13 +283,14 @@ function FetchSingleGame() {
             },
             body: JSON.stringify({
               id: singleGame.leaderboard._id,
-              userId: result._id,
+              userId: createUserResult._id,
             }),
           },
         );
-        const resultLeaderBoard = await leaderBoardResponse.json();
+        const addPlayerToLeaderBoardResult =
+          await addPlayerToLeaderBoard.json();
 
-        console.log(resultLeaderBoard);
+        console.log(addPlayerToLeaderBoardResult);
 
         navigate(`/leaderboard/${singleGame._id}`);
       } catch (err) {
@@ -362,7 +319,7 @@ function FetchSingleGame() {
         gameTime={minutes + ":" + seconds + ":" + milliseconds}
         showLeaderBoardLink={false}
       >
-        {singleGame.characters.map((character) => (
+        {singleGame.map((character) => (
           <div
             key={character._id}
             className={style.navContentFlexCharContainer}
@@ -385,11 +342,11 @@ function FetchSingleGame() {
         ))}
       </NavComponent>
       <MainComponent
+        gameImageSrc={singleGameLoader.image_link}
+        // gameImageDescription={singleGameLoader.game_name}
+        onLoad={startGame}
         useRefProp={gameImageRef}
-        gameImageSrc={singleGame.image_link}
-        gameImageDescription={singleGame.game_name}
-        onLoad={startTimer}
-        onLoadTimer={startGame}
+        // onLoad={startTimer}
         position={checkIfGameIsFinished ? "fixed" : ""}
       >
         {checkIfGameIsFinished ? (
@@ -397,7 +354,7 @@ function FetchSingleGame() {
         ) : (
           ""
         )}
-        {singleGame.characters.map((character) =>
+        {singleGame.map((character) =>
           character.marked ? (
             <div
               key={character._id}
@@ -445,13 +402,13 @@ function FetchSingleGame() {
               }}
               className={`${!checkIfGameIsFinished ? "dropDownMenu" : "hideDropDownMenu"}`}
             >
-              {singleGame.characters.map((character) =>
+              {singleGame.map((character) =>
                 !character.marked ? (
                   <DropDownMenuContent
                     onClick={() => normalizeCoordinates(character)}
                     key={character._id}
                     characterImageSrc={character.character_image}
-                    characterImageDescription="Dragon Charmer Island Characters"
+                    characterImageDescription={singleGame.game_name}
                     characterName={character.character_name}
                   />
                 ) : (
@@ -467,3 +424,9 @@ function FetchSingleGame() {
 }
 
 export default FetchSingleGame;
+
+export const fetchSingleGameCharactersLoader = async (params) => {
+  const response = await fetch(`http://localhost:3000/games/${params}`);
+
+  return await response.json();
+};

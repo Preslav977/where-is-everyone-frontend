@@ -7,18 +7,28 @@ export const AllGamesContext = createContext(null);
 
 export const SingleGameContext = createContext(null);
 
+export const SingleGameCharactersContext = createContext(null);
+
 function App() {
   const [games, setGames] = useState([]);
 
-  const [singleGame, setSingleGame] = useState();
+  const [singleGameCharacters, setSingleGameCharacters] = useState();
+
+  const [gameSessionID, setGameSessionID] = useState(0);
 
   return (
     <>
-      <SingleGameContext.Provider value={[singleGame, setSingleGame]}>
-        <AllGamesContext.Provider value={[games, setGames]}>
-          <Outlet />
-        </AllGamesContext.Provider>
-      </SingleGameContext.Provider>
+      <SingleGameCharactersContext.Provider
+        value={[gameSessionID, setGameSessionID]}
+      >
+        <SingleGameContext.Provider
+          value={[singleGameCharacters, setSingleGameCharacters]}
+        >
+          <AllGamesContext.Provider value={[games, setGames]}>
+            <Outlet />
+          </AllGamesContext.Provider>
+        </SingleGameContext.Provider>
+      </SingleGameCharactersContext.Provider>
       <FooterComponent />
     </>
   );
