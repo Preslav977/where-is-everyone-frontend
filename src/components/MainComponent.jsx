@@ -2,14 +2,15 @@ import style from "./MainComponent.module.css";
 import PropTypes from "prop-types";
 
 function MainComponent({
-  gameImageSrc,
-  gameImageDescription,
-  onLoad,
-  useRefProp,
-  children,
-  onLoadTimer,
   className,
   position,
+  useRefProp,
+  onLoad,
+  onLoadTimer,
+  gameImageSrc,
+  gameImageDescription,
+
+  children,
 }) {
   return (
     <main className={className}>
@@ -17,7 +18,10 @@ function MainComponent({
         <div className={style.mainGameContent} style={{ position: position }}>
           <img
             ref={useRefProp}
-            onLoad={onLoad}
+            onLoad={() => {
+              onLoad();
+              onLoadTimer();
+            }}
             className={style.mainComponentImg}
             src={gameImageSrc}
             alt={gameImageDescription}

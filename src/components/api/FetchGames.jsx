@@ -70,8 +70,6 @@ function FetchGames() {
             {games.map((game) => (
               <GameComponent
                 key={game._id}
-                // onClick={() => getGameIdOnClick(game)}
-                // gameID={game._id}
                 gameImage={game.image_link}
                 gameName={game.game_name}
                 showButton={true}
@@ -92,8 +90,6 @@ function FetchGames() {
             {games.map((game) => (
               <GameComponent
                 key={game._id}
-                // onClick={() => getGameIdOnClick(game)}
-                // gameID={game._id}
                 gameImage={game.image_link}
                 gameName={game.game_name}
                 showButton={true}
@@ -101,19 +97,7 @@ function FetchGames() {
               />
             ))}
           </section>
-          <div
-            style={{
-              textAlign: "center",
-              maxWidth: "1000px",
-              margin: "0 auto",
-              // outline: "2px solid white",
-              display: "flex",
-              flexDirection: "column",
-              alignContent: "center",
-              justifyItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
+          <div className={style.leaderboardGameContainer}>
             <LeaderBoardTable>
               {singleGame.leaderboard.users.map((user, index) => (
                 <tr key={user._id}>

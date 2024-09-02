@@ -13,10 +13,18 @@ function FetchSingleGame() {
 
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
 
-  console.log(singleGame, singleGameLoader);
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const gameImageRef = useRef(null);
+
+  const targetingBoxAndCharactersDropDownRef = useRef(null);
+
+  const timeInterval = useRef(null);
+
+  const navigate = useNavigate();
+
+  const { id } = useParams();
 
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [imageWidthAndHeight, setImageWidthAndHeight] = useState({
@@ -24,31 +32,21 @@ function FetchSingleGame() {
     height: 0,
   });
 
-  const gameImageRef = useRef(null);
-
-  const [gameSessionID, setGameSessionID] = useState(0);
-
   const [gameTimer, setGameTimer] = useState(0);
 
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const timeInterval = useRef(null);
+  const [gameSessionID, setGameSessionID] = useState(0);
 
   const [checkIfGameIsFinished, setCheckIfGameIsFinished] = useState(false);
 
   const [playerScore, setPlayerScore] = useState(0);
-
-  const navigate = useNavigate();
 
   let calculateStartAndCurrentTime = 0;
 
   const targetingBoxDimension = 70;
 
   const centerTargetingBox = targetingBoxDimension / 2;
-
-  const targetingBoxAndCharactersDropDownRef = useRef(null);
-
-  const { id } = useParams();
 
   useEffect(() => {
     fetch(`http://localhost:3000/characters/${id}`, {
@@ -111,8 +109,8 @@ function FetchSingleGame() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          game: singleGame._id,
-          characters: singleGameLoader,
+          game: singleGameLoader._id,
+          characters: singleGame,
         }),
       });
       const newGameSessionResult = await newGameSession.json();
@@ -120,9 +118,16 @@ function FetchSingleGame() {
       console.log(newGameSessionResult);
 
       const startTime = new Date(newGameSessionResult.startTime);
+
+      console.log(startTime);
+
       const currentTime = new Date();
+
       calculateStartAndCurrentTime =
         startTime.getTime() - currentTime.getTime();
+
+      console.log(calculateStartAndCurrentTime);
+
       setGameSessionID(newGameSessionResult._id);
     } catch (err) {
       console.log(err);
@@ -160,8 +165,6 @@ function FetchSingleGame() {
   const { minutes, seconds, milliseconds } = formatTime(gameTimer);
 
   async function normalizeCoordinates(character) {
-    console.log(character);
-
     const copyCoords = { ...coordinates };
 
     const findLowerBoundX =
@@ -206,14 +209,19 @@ function FetchSingleGame() {
 
       console.log(markCharacterIfFoundResult);
 
-      const refetchMarkedCharacters = await fetch(
-        "http://localhost:3000/session/:id",
-        {
-          mode: "cors",
-        },
-      );
-
-      const characters = await refetchMarkedCharacters.json();
+      if (markCharacterIfFoundResult.message !== "Target not found") {
+        setSingleGame(
+          singleGame.map((obj) => {
+            if (obj._id === character._id) {
+              return { ...obj, marked: true };
+            } else {
+              return obj;
+            }
+          }),
+        );
+      } else {
+        return;
+      }
 
       try {
         const checkIfGameIsDone = await fetch(
@@ -346,7 +354,7 @@ function FetchSingleGame() {
         // gameImageDescription={singleGameLoader.game_name}
         onLoad={startGame}
         useRefProp={gameImageRef}
-        // onLoad={startTimer}
+        onLoadTimer={startTimer}
         position={checkIfGameIsFinished ? "fixed" : ""}
       >
         {checkIfGameIsFinished ? (
@@ -425,7 +433,7 @@ function FetchSingleGame() {
 
 export default FetchSingleGame;
 
-export const fetchSingleGameCharactersLoader = async (params) => {
+export const fetchSingleGameLoader = async (params) => {
   const response = await fetch(`http://localhost:3000/games/${params}`);
 
   return await response.json();

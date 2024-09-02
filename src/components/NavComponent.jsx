@@ -23,8 +23,11 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
     return (
       <nav className={style.navContainer}>
         <ul className={style.ulContainer}>
-          <a href="/">
-            Character<span className={style.navLinkSpan}>Hunt</span>
+          <a href="/" id="character">
+            Character
+            <span id="hunt" className={style.navLinkSpan}>
+              Hunt
+            </span>
           </a>
         </ul>
         <p className={style.navContentGameTime}>{gameTime}</p>
