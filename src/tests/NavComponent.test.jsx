@@ -89,34 +89,34 @@ describe("Should render NavComponent", () => {
     expect(screen.queryByText("Start Game").textContent).toMatch(/Start Game/i);
   });
 
-  //   it("Should navigate to Game on clicking the Start Game button", async () => {
-  //     const router = createMemoryRouter(routes, {
-  //       initialEntries: ["/", "/66d1a12dcec8c4497322b73e"],
-  //       initialIndex: 0,
-  //     });
-  //     render(<RouterProvider router={router}></RouterProvider>);
-  //     // screen.debug();
+  it("Should navigate to Game on clicking the Start Game button", async () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/", "/66d1a12dcec8c4497322b73e"],
+      initialIndex: 0,
+    });
+    render(<RouterProvider router={router}></RouterProvider>);
+    // screen.debug();
 
-  //     const apiLoading = screen.queryByAltText("Loading...");
+    const apiLoading = screen.queryByAltText("Loading...");
 
-  //     expect(apiLoading).toBeInTheDocument();
+    expect(apiLoading).toBeInTheDocument();
 
-  //     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
+    await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-  //     const user = userEvent.setup();
+    const user = userEvent.setup();
 
-  //     const startGameButton = screen.getByText("Start Game");
+    const startGameButton = screen.getByTestId("start-game");
 
-  //     console.log(startGameButton);
+    console.log(startGameButton);
 
-  //     screen.debug();
+    // screen.debug();
 
-  //     // await user.click(screen.findByTestId("start-game"));
+    // await user.click(screen.findByTestId("start-game"));
 
-  //     await user.click(startGameButton);
+    await user.click(startGameButton);
 
-  //     // expect(startGameButton).toHaveBeenCalledOnce();
+    // expect(startGameButton).toHaveBeenCalledOnce();
 
-  //     screen.debug();
-  //   });
+    screen.debug();
+  });
 });
