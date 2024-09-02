@@ -26,7 +26,9 @@ function GameComponent({
         <h3>{gameName}</h3>
         {showButton && (
           <div className={style.gameDescriptionLinkContainer}>
-            <a href={gameLink}>Start Game</a>
+            <Link id="start-game" to={`/${gameLink}`}>
+              Start Game
+            </Link>
           </div>
         )}
       </div>
