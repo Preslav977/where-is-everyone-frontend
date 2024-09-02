@@ -9,7 +9,6 @@ function MainComponent({
   onLoadTimer,
   gameImageSrc,
   gameImageDescription,
-
   children,
 }) {
   return (

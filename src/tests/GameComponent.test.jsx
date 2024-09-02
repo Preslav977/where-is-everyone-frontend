@@ -6,7 +6,7 @@ import {
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import routes from "../router/routes";
-import { element } from "prop-types";
+
 import GameComponent from "../components/GameComponent";
 
 describe("Should render GameComponent", () => {
