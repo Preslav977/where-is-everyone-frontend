@@ -137,7 +137,7 @@ function FetchSingleGame() {
         },
         body: JSON.stringify({
           game: singleGame._id,
-          characters: singleGame,
+          characters: singleGameCharacters,
         }),
       });
       const newGameSessionResult = await newGameSession.json();
@@ -237,8 +237,8 @@ function FetchSingleGame() {
       console.log(markCharacterIfFoundResult);
 
       if (markCharacterIfFoundResult.message !== "Target not found") {
-        setSingleGame(
-          singleGame.map((obj) => {
+        setSingleGameCharacters(
+          singleGameCharacters.map((obj) => {
             if (obj._id === character._id) {
               return { ...obj, marked: true };
             } else {
