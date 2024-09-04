@@ -13,7 +13,7 @@ describe("Should render NavComponent", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });
-    render(<RouterProvider router={router}></RouterProvider>);
+    render(<RouterProvider router={router} />);
     // screen.debug();
 
     const apiLoading = screen.queryByAltText("Loading...");
@@ -28,15 +28,11 @@ describe("Should render NavComponent", () => {
 
     expect(screen.queryByText("Hunt").textContent).toMatch(/Hunt/i);
 
-    expect(screen.queryByText("Leaderboard").textContent).toMatch(
-      /Leaderboard/i,
-    );
+    const Leaderboard = screen.queryByText("Leaderboard");
+
+    expect(Leaderboard.textContent).toMatch(/Leaderboard/i);
 
     expect(screen.queryByText("Games").textContent).toMatch(/Games/i);
-
-    expect(screen.queryByText("Leaderboard").textContent).toMatch(
-      /Leaderboard/i,
-    );
 
     expect(screen.queryByText("Dragon Charmers Island").textContent).toMatch(
       /Dragon Charmers Island/i,
@@ -92,7 +88,7 @@ describe("Should render NavComponent", () => {
   it("Should navigate to Game on clicking the Start Game button", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/", "/66d1a12dcec8c4497322b73e"],
-      initialIndex: 0,
+      initialIndex: 1,
     });
     render(<RouterProvider router={router}></RouterProvider>);
     // screen.debug();
@@ -103,20 +99,56 @@ describe("Should render NavComponent", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-    const user = userEvent.setup();
-
-    const startGameButton = screen.getByTestId("start-game");
-
-    console.log(startGameButton);
-
-    // screen.debug();
-
-    // await user.click(screen.findByTestId("start-game"));
-
-    await user.click(startGameButton);
-
-    // expect(startGameButton).toHaveBeenCalledOnce();
-
     screen.debug();
+
+    expect(screen.queryByText("Character").textContent).toMatch(/Character/i);
+
+    expect(screen.queryByText("Hunt").textContent).toMatch(/Hunt/i);
+
+    expect(screen.queryByText("00:00:000").textContent).toMatch(/00:00:000/);
+
+    const characterRaftManImg = screen.queryAllByRole("img");
+
+    const characterRaftManName = screen.queryAllByText("Raft Man");
+
+    expect(characterRaftManImg[0].alt).toEqual(
+      "Dragon Charmers Island Characters",
+    );
+
+    expect(characterRaftManImg[0].src).toEqual(
+      "http://localhost:3000/raft-man.png",
+    );
+
+    expect(characterRaftManName[0].textContent).toEqual("Raft Man");
+
+    const characterDragonImg = screen.queryAllByRole("img");
+
+    const characterDragonName = screen.queryAllByText("Dragon");
+
+    expect(characterDragonImg[1].alt).toEqual(
+      "Dragon Charmers Island Characters",
+    );
+
+    expect(characterDragonImg[1].src).toEqual(
+      "http://localhost:3000/dragon.png",
+    );
+
+    expect(characterDragonName[1].textContent).toEqual("Dragon");
+
+    const characterWizardImg = screen.queryAllByRole("img");
+
+    const characterWizardName = screen.queryAllByText("Wizard");
+
+    expect(characterWizardImg[2].alt).toEqual(
+      "Dragon Charmers Island Characters",
+    );
+
+    expect(characterWizardImg[2].src).toEqual(
+      "http://localhost:3000/wizard.png",
+    );
+
+    expect(characterWizardName[2].textContent).toEqual("Wizard");
+
+    expect(screen.queryByText(3).textContent).toEqual("3");
   });
 });

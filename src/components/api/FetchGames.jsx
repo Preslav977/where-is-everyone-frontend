@@ -64,60 +64,60 @@ function FetchGames() {
       return <p>A network error was encountered</p>
     </div>;
 
-  if (singleGame === undefined) {
-    return (
-      <>
-        <NavComponent showLeaderBoardLink={true} />
-        <main className={style.mainGameContainer}>
-          <h2 className={style.mainGameHeader}>Games</h2>
-          <section className={style.mainGameSection}>
-            {games.map((game) => (
-              <GameComponent
-                key={game._id}
-                // onClick={navigateToSingleGame}
-                gameImage={game.image_link}
-                gameName={game.game_name}
-                showButton={true}
-                gameLink={`/${game._id}`}
-              />
-            ))}
-          </section>
-        </main>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <NavComponent showLeaderBoardLink={true} />
-        <main className={style.mainGameContainer}>
-          <h2 className={style.mainGameHeader}>Leaderboard</h2>
-          <section className={style.mainGameSection}>
-            {games.map((game) => (
-              <GameComponent
-                key={game._id}
-                gameImage={game.image_link}
-                gameName={game.game_name}
-                showButton={true}
-                gameLink={`/${game._id}`}
-              />
-            ))}
-          </section>
-          <div className={style.leaderboardGameContainer}>
-            {/* <LeaderBoardTable>
-              {singleGame.leaderboard.users.map((user, index) => (
-                <tr key={user._id}>
-                  <td className={style.tableCell}>{index + 1}</td>
-                  <td>{user.username}</td>
-                  <td>{user.score + "s"}</td>
-                  <td>{format(Date.parse(user.date), "MMM dd, yyyy")}</td>
-                </tr>
-              ))}
-            </LeaderBoardTable> */}
-          </div>
-        </main>
-      </>
-    );
-  }
+  return (
+    <>
+      <NavComponent showLeaderBoardLink={true} />
+      <main className={style.mainGameContainer}>
+        <h2 className={style.mainGameHeader}>Games</h2>
+        <section className={style.mainGameSection}>
+          {games.map((game) => (
+            <GameComponent
+              key={game._id}
+              // onClick={navigateToSingleGame}
+              gameImage={game.image_link}
+              gameName={game.game_name}
+              showButton={true}
+              gameLink={`/${game._id}`}
+            />
+          ))}
+        </section>
+      </main>
+    </>
+  );
+
+  // } else {
+  //   return (
+  //     <>
+  //       <NavComponent showLeaderBoardLink={true} />
+  //       <main className={style.mainGameContainer}>
+  //         <h2 className={style.mainGameHeader}>Leaderboard</h2>
+  //         <section className={style.mainGameSection}>
+  //           {games.map((game) => (
+  //             <GameComponent
+  //               key={game._id}
+  //               gameImage={game.image_link}
+  //               gameName={game.game_name}
+  //               showButton={true}
+  //               gameLink={`/${game._id}`}
+  //             />
+  //           ))}
+  //         </section>
+  //         <div className={style.leaderboardGameContainer}>
+  //           {/* <LeaderBoardTable>
+  //             {singleGame.leaderboard.users.map((user, index) => (
+  //               <tr key={user._id}>
+  //                 <td className={style.tableCell}>{index + 1}</td>
+  //                 <td>{user.username}</td>
+  //                 <td>{user.score + "s"}</td>
+  //                 <td>{format(Date.parse(user.date), "MMM dd, yyyy")}</td>
+  //               </tr>
+  //             ))}
+  //           </LeaderBoardTable> */}
+  //         </div>
+  //       </main>
+  //     </>
+  //   );
+  // }
 }
 
 export default FetchGames;
