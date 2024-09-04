@@ -14,7 +14,7 @@ function GameComponent({
   return (
     <div className={style.gameContainer}>
       <div className={style.gameImgContainer}>
-        <Link to={""}>
+        <Link to={"/66d1a12dcec8c4497322b73e"}>
           <img
             className={style.gameImage}
             src={gameImage}
@@ -26,9 +26,12 @@ function GameComponent({
         <h3>{gameName}</h3>
         {showButton && (
           <div className={style.gameDescriptionLinkContainer}>
-            <Link data-testid="start-game" to={`/${gameLink}`}>
+            <a data-testid="start-game" href={gameLink}>
               Start Game
-            </Link>
+            </a>
+            {/* <button data-testid="start-game" onClick={onClick}>
+              Start Game
+            </button> */}
           </div>
         )}
       </div>

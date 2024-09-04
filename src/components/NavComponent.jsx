@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 
 import { useContext, useRef } from "react";
 import DropDownMenuContent from "./DropDownMenuContent";
-import { SingleGameContext } from "../App";
+import { SingleGameCharactersContext } from "../App";
 
 function NavComponent({ gameTime, showLeaderBoardLink, children }) {
   const dropDownCharactersRef = useRef(null);
 
-  const [singleGame, setSingleGame] = useContext(SingleGameContext);
+  const [singleGameCharacters, setSingleGameCharacters] = useContext(
+    SingleGameCharactersContext,
+  );
 
   function toggleCharactersDropDown() {
     if (dropDownCharactersRef.current.style.display === "none") {
@@ -19,7 +21,7 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
     }
   }
 
-  if (singleGame === undefined) {
+  if (singleGameCharacters === undefined) {
     return (
       <nav className={style.navContainer}>
         <ul className={style.ulContainer}>
@@ -61,10 +63,10 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
             className={style.ulDropDownContent}
             onClick={toggleCharactersDropDown}
           >
-            {singleGame.filter((char) => !char.marked).length}
+            {singleGameCharacters.filter((char) => !char.marked).length}
           </ul>
           <li className={style.liDropDownContent} ref={dropDownCharactersRef}>
-            {singleGame.map((character) =>
+            {singleGameCharacters.map((character) =>
               !character.marked ? (
                 <DropDownMenuContent
                   key={character._id}

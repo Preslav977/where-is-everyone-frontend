@@ -12,23 +12,21 @@ export const SingleGameCharactersContext = createContext(null);
 function App() {
   const [games, setGames] = useState([]);
 
-  const [singleGameCharacters, setSingleGameCharacters] = useState();
+  const [singleGame, setSingleGame] = useState([]);
 
-  const [gameSessionID, setGameSessionID] = useState(0);
+  const [singleGameCharacters, setSingleGameCharacters] = useState();
 
   return (
     <>
-      <SingleGameCharactersContext.Provider
-        value={[gameSessionID, setGameSessionID]}
-      >
-        <SingleGameContext.Provider
+      <SingleGameContext.Provider value={[singleGame, setSingleGame]}>
+        <SingleGameCharactersContext.Provider
           value={[singleGameCharacters, setSingleGameCharacters]}
         >
           <AllGamesContext.Provider value={[games, setGames]}>
             <Outlet />
           </AllGamesContext.Provider>
-        </SingleGameContext.Provider>
-      </SingleGameCharactersContext.Provider>
+        </SingleGameCharactersContext.Provider>
+      </SingleGameContext.Provider>
       <FooterComponent />
     </>
   );

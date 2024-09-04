@@ -48,9 +48,13 @@ function FetchGames() {
   //   }
   // }
 
+  // function navigateToSingleGame() {
+  //   navigate("/66d1a12dcec8c4497322b73e");
+  // }
+
   if (loading)
     return (
-      <div className="loadingContainer">
+      <div data-testid="loading" className="loadingContainer">
         <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
@@ -70,10 +74,11 @@ function FetchGames() {
             {games.map((game) => (
               <GameComponent
                 key={game._id}
+                // onClick={navigateToSingleGame}
                 gameImage={game.image_link}
                 gameName={game.game_name}
                 showButton={true}
-                gameLink={game._id}
+                gameLink={`/${game._id}`}
               />
             ))}
           </section>
@@ -93,12 +98,12 @@ function FetchGames() {
                 gameImage={game.image_link}
                 gameName={game.game_name}
                 showButton={true}
-                gameLink={game._id}
+                gameLink={`/${game._id}`}
               />
             ))}
           </section>
           <div className={style.leaderboardGameContainer}>
-            <LeaderBoardTable>
+            {/* <LeaderBoardTable>
               {singleGame.leaderboard.users.map((user, index) => (
                 <tr key={user._id}>
                   <td className={style.tableCell}>{index + 1}</td>
@@ -107,7 +112,7 @@ function FetchGames() {
                   <td>{format(Date.parse(user.date), "MMM dd, yyyy")}</td>
                 </tr>
               ))}
-            </LeaderBoardTable>
+            </LeaderBoardTable> */}
           </div>
         </main>
       </>

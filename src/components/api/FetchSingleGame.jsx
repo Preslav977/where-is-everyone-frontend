@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigation, useParams } from "react-router-dom";
 import MainComponent from "../MainComponent";
 import DropDownMenuContent from "../DropDownMenuContent";
 import Dialog from "../Dialog";
@@ -7,14 +7,24 @@ import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import style from "../NavComponent.module.css";
 import { useNavigate } from "react-router-dom";
+import { SingleGameCharactersContext } from "../../App";
 
 function FetchSingleGame() {
-  const singleGameLoader = useLoaderData();
-
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
 
   const [error, setError] = useState(null);
+
   const [loading, setLoading] = useState(true);
+
+  const [singleGameCharacters, setSingleGameCharacters] = useContext(
+    SingleGameCharactersContext,
+  );
+
+  // console.log(singleGame, singleGameCharacters);
+
+  const [errorCharacters, setErrorCharacters] = useState(null);
+
+  const [loadingCharacters, setLoadingCharacters] = useState(true);
 
   const gameImageRef = useRef(null);
 
@@ -49,7 +59,7 @@ function FetchSingleGame() {
   const centerTargetingBox = targetingBoxDimension / 2;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/characters/${id}`, {
+    fetch(`http://localhost:3000/games/${id}`, {
       mode: "cors",
     })
       .then((response) => {
@@ -62,6 +72,23 @@ function FetchSingleGame() {
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, [id, setSingleGame]);
+
+  useEffect(() => {
+    // setTimeout(() => {
+    fetch(`http://localhost:3000/characters/${id}`, {
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Server Error");
+        }
+        return response.json();
+      })
+      .then((response) => setSingleGameCharacters(response))
+      .catch((errorCharacters) => setErrorCharacters(errorCharacters))
+      .finally(() => setLoadingCharacters(false));
+    // }, 3000);
+  }, [id, setSingleGameCharacters]);
 
   useEffect(() => {
     function getCoordinates(e) {
@@ -109,7 +136,7 @@ function FetchSingleGame() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          game: singleGameLoader._id,
+          game: singleGame._id,
           characters: singleGame,
         }),
       });
@@ -309,14 +336,14 @@ function FetchSingleGame() {
     }
   }
 
-  if (loading)
+  if (loading && loadingCharacters)
     return (
       <div className="loadingContainer">
-        <img className="loading" src="loading.svg" alt="" />
+        <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
 
-  if (error)
+  if (error && errorCharacters)
     <div>
       return <p>A network error was encountered</p>
     </div>;
@@ -327,7 +354,7 @@ function FetchSingleGame() {
         gameTime={minutes + ":" + seconds + ":" + milliseconds}
         showLeaderBoardLink={false}
       >
-        {singleGame.map((character) => (
+        {singleGameCharacters.map((character) => (
           <div
             key={character._id}
             className={style.navContentFlexCharContainer}
@@ -350,7 +377,7 @@ function FetchSingleGame() {
         ))}
       </NavComponent>
       <MainComponent
-        gameImageSrc={singleGameLoader.image_link}
+        gameImageSrc={singleGame.image_link}
         // gameImageDescription={singleGameLoader.game_name}
         onLoad={startGame}
         useRefProp={gameImageRef}
@@ -362,7 +389,7 @@ function FetchSingleGame() {
         ) : (
           ""
         )}
-        {singleGame.map((character) =>
+        {singleGameCharacters.map((character) =>
           character.marked ? (
             <div
               key={character._id}
@@ -410,7 +437,7 @@ function FetchSingleGame() {
               }}
               className={`${!checkIfGameIsFinished ? "dropDownMenu" : "hideDropDownMenu"}`}
             >
-              {singleGame.map((character) =>
+              {singleGameCharacters.map((character) =>
                 !character.marked ? (
                   <DropDownMenuContent
                     onClick={() => normalizeCoordinates(character)}
@@ -433,8 +460,7 @@ function FetchSingleGame() {
 
 export default FetchSingleGame;
 
-export const fetchSingleGameLoader = async (params) => {
-  const response = await fetch(`http://localhost:3000/games/${params}`);
-
-  return await response.json();
-};
+// export const fetchSingleGameLoader = async (params) => {
+//   // const response = await fetch(`http://localhost:3000/games/${params}`);
+//   // return await response.json();
+// };
