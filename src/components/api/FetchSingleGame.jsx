@@ -1,30 +1,22 @@
-import { useEffect, useState, useRef, useContext } from "react";
-import { useLoaderData, useNavigation, useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import MainComponent from "../MainComponent";
 import DropDownMenuContent from "../DropDownMenuContent";
 import Dialog from "../Dialog";
 import NavComponent from "../NavComponent";
-import { SingleGameContext } from "../../App";
 import style from "../NavComponent.module.css";
 import { useNavigate } from "react-router-dom";
-import { SingleGameCharactersContext } from "../../App";
+import useSingleGameURL from "./useSingleGameURL";
+import useSingleGameCharactersURL from "./useSingleGameCharactersURL";
 
 function FetchSingleGame() {
-  const [singleGame, setSingleGame] = useContext(SingleGameContext);
+  const { singleGame, error, loading } = useSingleGameURL();
 
-  const [error, setError] = useState(null);
-
-  const [loading, setLoading] = useState(true);
-
-  const [singleGameCharacters, setSingleGameCharacters] = useContext(
-    SingleGameCharactersContext,
-  );
-
-  // console.log(singleGame, singleGameCharacters);
-
-  const [errorCharacters, setErrorCharacters] = useState(null);
-
-  const [loadingCharacters, setLoadingCharacters] = useState(true);
+  const {
+    singleGameCharacters,
+    setSingleGameCharacters,
+    errorCharacters,
+    loadingCharacters,
+  } = useSingleGameCharactersURL();
 
   const gameImageRef = useRef(null);
 
@@ -33,8 +25,6 @@ function FetchSingleGame() {
   const timeInterval = useRef(null);
 
   const navigate = useNavigate();
-
-  const { id } = useParams();
 
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [imageWidthAndHeight, setImageWidthAndHeight] = useState({
@@ -57,38 +47,6 @@ function FetchSingleGame() {
   const targetingBoxDimension = 70;
 
   const centerTargetingBox = targetingBoxDimension / 2;
-
-  useEffect(() => {
-    fetch(`http://localhost:3000/games/${id}`, {
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Server Error");
-        }
-        return response.json();
-      })
-      .then((response) => setSingleGame(response))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
-  }, [id, setSingleGame]);
-
-  useEffect(() => {
-    // setTimeout(() => {
-    fetch(`http://localhost:3000/characters/${id}`, {
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Server Error");
-        }
-        return response.json();
-      })
-      .then((response) => setSingleGameCharacters(response))
-      .catch((errorCharacters) => setErrorCharacters(errorCharacters))
-      .finally(() => setLoadingCharacters(false));
-    // }, 3000);
-  }, [id, setSingleGameCharacters]);
 
   useEffect(() => {
     function getCoordinates(e) {
