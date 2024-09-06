@@ -6,6 +6,7 @@ import {
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import routes from "../router/routes";
+import userEvent from "@testing-library/user-event";
 
 describe("Should render FetchSingleGame", () => {
   it("Should navigate to Game on clicking the Start Game button", async () => {
@@ -73,5 +74,32 @@ describe("Should render FetchSingleGame", () => {
     expect(characterWizardName[2].textContent).toEqual("Wizard");
 
     expect(screen.queryByText(3).textContent).toEqual("3");
+  });
+
+  it("Should click on the main image and show the drop-down menu", async () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/", "/66d1a12dcec8c4497322b73e"],
+      initialIndex: 1,
+    });
+    render(<RouterProvider router={router} />);
+    // screen.debug();
+
+    const apiLoading = screen.queryByAltText("Loading...");
+
+    expect(apiLoading).toBeInTheDocument();
+
+    await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
+
+    const mainImg = screen.queryByTestId("main-img");
+
+    const user = userEvent.setup();
+
+    await user.click(mainImg);
+
+    screen.debug();
+
+    expect(mainImg.src).toEqual(
+      "http://localhost:3000/dragon-charmers-island.jpg",
+    );
   });
 });

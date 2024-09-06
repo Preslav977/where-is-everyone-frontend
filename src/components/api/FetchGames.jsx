@@ -6,28 +6,10 @@ import NavComponent from "../NavComponent";
 import { SingleGameContext } from "../../App";
 import LeaderBoardTable from "./LeaderBoardTable";
 import { format } from "date-fns";
+import useGamesURL from "./useGamesURL";
 
 function FetchGames() {
-  const [games, setGames] = useContext(AllGamesContext);
-  const [singleGame, setSingleGame] = useContext(SingleGameContext);
-
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/games", {
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Server Error");
-        }
-        return response.json();
-      })
-      .then((response) => setGames(response))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
-  }, [setGames]);
+  const { games, error, loading } = useGamesURL();
 
   // async function getGameIdOnClick(game) {
   //   try {
@@ -60,9 +42,11 @@ function FetchGames() {
     );
 
   if (error)
-    <div>
-      return <p>A network error was encountered</p>
-    </div>;
+    return (
+      <div>
+        return <p data-testid="error">A network error was encountered</p>
+      </div>
+    );
 
   return (
     <>

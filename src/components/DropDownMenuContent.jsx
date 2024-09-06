@@ -8,7 +8,11 @@ function DropDownMenuContent({
   onClick,
 }) {
   return (
-    <div onClick={onClick} className={style.dropDownCharacterContainer}>
+    <div
+      data-testid="drop-down-characters"
+      onClick={onClick}
+      className={style.dropDownCharacterContainer}
+    >
       <img
         className={style.dropDownCharacterImg}
         src={characterImageSrc}

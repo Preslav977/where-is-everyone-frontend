@@ -4,12 +4,24 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import routes from "../router/routes";
 import userEvent from "@testing-library/user-event";
 
 describe("Should render FetchGames", () => {
-  it("Should render FetchGames", async () => {
+  it("Should render Loading if the fetch is done before rendering", () => {
+    const router = createMemoryRouter(routes, {
+      initialEntries: ["/"],
+    });
+
+    render(<RouterProvider router={router} />);
+
+    // screen.debug();
+
+    expect(screen.queryByRole("img").alt).toEqual("Loading...");
+  });
+
+  it("Should render FetchGames game on", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });
@@ -102,7 +114,7 @@ describe("Should render FetchGames", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByText("Character").textContent).toMatch(/Character/i);
 

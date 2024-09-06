@@ -16,6 +16,7 @@ function MainComponent({
       <section className={style.mainGameSectionWrapper}>
         <div className={style.mainGameContent} style={{ position: position }}>
           <img
+            data-testid="main-img"
             ref={useRefProp}
             onLoad={() => {
               onLoad();
