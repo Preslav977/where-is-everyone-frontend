@@ -7,7 +7,7 @@ import {
   screen,
 } from "@testing-library/react";
 
-describe("Should mock the response objet of useSingleGameURL hook", () => {
+describe("Should mock the response object of useSingleGameURL hook", () => {
   beforeAll(() => {
     window.fetch = vi.fn(() => {
       const game = [
