@@ -7,10 +7,10 @@ import {
   screen,
 } from "@testing-library/react";
 
-describe("Should mock the response object of the useEffect hook", () => {
+describe("Should mock the response objet of useSingleGameURL hook", () => {
   beforeAll(() => {
     window.fetch = vi.fn(() => {
-      const games = [
+      const game = [
         {
           id: "66d1a12dcec8c4497322b73e",
           image_link: "http://localhost:3000/dragon-charmers-island.jpg",
@@ -19,7 +19,7 @@ describe("Should mock the response object of the useEffect hook", () => {
       ];
 
       return Promise.resolve({
-        json: () => Promise.resolve(games),
+        json: () => Promise.resolve(game),
       });
     });
   });
@@ -28,7 +28,7 @@ describe("Should mock the response object of the useEffect hook", () => {
     window.fetch.mockRestore();
   });
 
-  it("Should mock the game one object", async () => {
+  it("Should mock the game with ID 66d1a12dcec8c4497322b73e object", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });
@@ -49,14 +49,12 @@ describe("Should mock the response object of the useEffect hook", () => {
     expect(fetchGames.textContent).toMatch(/Dragon Charmers Island/i);
   });
 
-  it("Should render Loading if the fetch is done before rendering", () => {
+  it("Should render loading if the fetch is done before rendering", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });
 
     render(<RouterProvider router={router} />);
-
-    // screen.debug();
 
     expect(screen.queryByRole("img").alt).toEqual("Loading...");
   });

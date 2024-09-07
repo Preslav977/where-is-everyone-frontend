@@ -27,7 +27,7 @@ describe("Should render GameComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByAltText("Dragon Charmers Island"));
 
@@ -63,7 +63,7 @@ describe("Should render GameComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByAltText("Dragon Charmers Island"));
 

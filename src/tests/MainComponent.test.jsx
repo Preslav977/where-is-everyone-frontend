@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import routes from "../router/routes";
 
 import MainComponent from "../components/MainComponent";
 
@@ -26,7 +25,7 @@ describe("Should render MainComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     const mainElement = screen.queryByRole("main");
 

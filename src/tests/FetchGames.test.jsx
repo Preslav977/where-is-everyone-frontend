@@ -9,7 +9,7 @@ import routes from "../router/routes";
 import userEvent from "@testing-library/user-event";
 
 describe("Should render FetchGames", () => {
-  it("Should render Loading if the fetch is done before rendering", () => {
+  it("Should render loading if the fetch is done before rendering", () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });
@@ -21,7 +21,7 @@ describe("Should render FetchGames", () => {
     expect(screen.queryByRole("img").alt).toEqual("Loading...");
   });
 
-  it("Should render FetchGames game on", async () => {
+  it("Should render FetchGames game one", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/"],
     });

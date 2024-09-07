@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import routes from "../router/routes";
 import DropDownMenuContent from "../components/DropDownMenuContent";
 
 describe("Should render DropDownMenuComponent", () => {
@@ -24,7 +23,7 @@ describe("Should render DropDownMenuComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByRole("img").src).toEqual(
       "http://localhost:3000/raft-man.png",
@@ -56,7 +55,7 @@ describe("Should render DropDownMenuComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByRole("img").src).toEqual(
       "http://localhost:3000/dragon.png",
@@ -88,7 +87,7 @@ describe("Should render DropDownMenuComponent", () => {
 
     render(<RouterProvider router={router} />);
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByRole("img").src).toEqual(
       "http://localhost:3000/wizard.png",
