@@ -4,9 +4,13 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import routes from "../router/routes";
 import userEvent from "@testing-library/user-event";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("Should render FetchSingleGame", () => {
   it("Should navigate to Game on clicking the Start Game button", async () => {
@@ -96,10 +100,32 @@ describe("Should render FetchSingleGame", () => {
 
     await user.click(mainImg);
 
-    screen.debug();
+    // screen.debug();
 
     expect(mainImg.src).toEqual(
       "http://localhost:3000/dragon-charmers-island.jpg",
     );
+
+    expect(screen.queryByTestId("targeting-box")).toBeInTheDocument();
+
+    screen.debug();
   });
+
+  // vi.spyOn(
+  //   window.HTMLElement.prototype,
+  //   "getBoundingClientRect",
+  // ).mockImplementation(() => ({
+  //   width: 1920,
+  //   left: 0,
+  //   right: 1920,
+  //   height: 2709.966552734375,
+  //   top: -824,
+  //   bottom: 1885.966552734375,
+  // }));
+
+  // await user.pointer({
+  //   keys: "[MouseLeft]",
+  //   target: mainImg,
+  //   coords: { x: 101, y: 1146 },
+  // });
 });
