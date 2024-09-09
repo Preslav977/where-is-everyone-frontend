@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 function GameComponent({
   onClick,
   gameID,
+  showLinkToLeaderBoard,
   gameImage,
   gameImageDescription,
   gameName,
@@ -12,15 +13,23 @@ function GameComponent({
   gameLink,
 }) {
   return (
-    <div className={style.gameContainer}>
+    <div onClick={onClick} className={style.gameContainer}>
       <div className={style.gameImgContainer}>
-        <Link to={""}>
+        {showLinkToLeaderBoard ? (
+          <Link to={`/leaderboard/${gameID}`}>
+            <img
+              className={style.gameImage}
+              src={gameImage}
+              alt={gameImageDescription}
+            />
+          </Link>
+        ) : (
           <img
             className={style.gameImage}
             src={gameImage}
             alt={gameImageDescription}
           />
-        </Link>
+        )}
       </div>
       <div className={style.gameDescription}>
         <h3>{gameName}</h3>
@@ -44,6 +53,7 @@ GameComponent.propTypes = {
   onClick: PropTypes.func,
   gameLink: PropTypes.string,
   showButton: PropTypes.bool,
+  showLinkToLeaderBoard: PropTypes.bool,
 };
 
 export default GameComponent;

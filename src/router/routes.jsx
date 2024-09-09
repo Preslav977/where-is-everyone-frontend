@@ -3,6 +3,7 @@ import FetchGames from "../components/api/FetchGames";
 import FetchSingleGame from "../components/api/FetchSingleGame";
 import LeaderBoardTable from "../components/api/LeaderBoardTable";
 // import { fetchSingleGameLoader } from "../components/api/FetchSingleGame";
+import FetchGamesLeaderBoard from "../components/api/FetchGamesLeaderBoard";
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
       },
       {
         path: "/leaderboard",
-        element: <FetchGames />,
+        element: <FetchGamesLeaderBoard />,
         children: [
           {
             path: ":id",

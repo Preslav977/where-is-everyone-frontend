@@ -12,18 +12,20 @@ const useSingleGameURL = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/games/${id}`, {
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error("Server Error");
-        }
-        return response.json();
+    setTimeout(() => {
+      fetch(`http://localhost:3000/games/${id}`, {
+        mode: "cors",
       })
-      .then((response) => setSingleGame(response))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+        .then((response) => {
+          if (response.status >= 400) {
+            throw new Error("Server Error");
+          }
+          return response.json();
+        })
+        .then((response) => setSingleGame(response))
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false));
+    }, 2000);
   }, [id, setSingleGame]);
 
   return { singleGame, setSingleGame, error, loading };

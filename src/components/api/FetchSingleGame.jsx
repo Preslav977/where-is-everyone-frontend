@@ -52,15 +52,11 @@ function FetchSingleGame() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
-      console.log(rect);
-
       const retrieveAndSetCoordinates = {
         ...coordinates,
         x: event.clientX - rect.left,
         y: event.clientY - rect.top,
       };
-
-      console.log(coordinates.x, coordinates.y);
 
       setCoordinates(retrieveAndSetCoordinates);
 

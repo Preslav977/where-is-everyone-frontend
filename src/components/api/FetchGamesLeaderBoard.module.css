@@ -1,0 +1,47 @@
+.mainGameContainer {
+  background-color: #0b0d22;
+  flex-grow: 1;
+}
+
+.mainGameSection {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.mainGameHeader {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.leaderBoardGameContainer {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  gap: 1rem;
+}
+
+.leaderBoardHeader {
+  color: #fff;
+  margin-top: 1.5em;
+}
+
+.leaderBoardContent {
+  color: #fff;
+  margin-top: 0.5em;
+}
+
+@media screen and (max-width: 800px) {
+  .mainGameSection {
+    display: flex;
+    flex-direction: column;
+  }
+}
