@@ -22,7 +22,7 @@ describe("Should render NavComponent", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-    // screen.debug();
+    screen.debug();
 
     expect(screen.queryByText("Character").textContent).toMatch(/Character/i);
 
@@ -39,6 +39,22 @@ describe("Should render NavComponent", () => {
     );
 
     expect(screen.queryAllByText("Start Game")[0].textContent).toMatch(
+      /Start Game/i,
+    );
+
+    expect(screen.queryByText("Super Mario Bros").textContent).toMatch(
+      /Super Mario Bros/i,
+    );
+
+    expect(screen.queryAllByText("Start Game")[1].textContent).toMatch(
+      /Start Game/i,
+    );
+
+    expect(screen.queryByText("Universe 133").textContent).toMatch(
+      /Universe 133/i,
+    );
+
+    expect(screen.queryAllByText("Start Game")[2].textContent).toMatch(
       /Start Game/i,
     );
   });
@@ -87,6 +103,22 @@ describe("Should render NavComponent", () => {
     expect(screen.queryAllByText("Start Game")[0].textContent).toMatch(
       /Start Game/i,
     );
+
+    expect(screen.queryByText("Super Mario Bros").textContent).toMatch(
+      /Super Mario Bros/i,
+    );
+
+    expect(screen.queryAllByText("Start Game")[1].textContent).toMatch(
+      /Start Game/i,
+    );
+
+    expect(screen.queryByText("Universe 133").textContent).toMatch(
+      /Universe 133/i,
+    );
+
+    expect(screen.queryAllByText("Start Game")[2].textContent).toMatch(
+      /Start Game/i,
+    );
   });
 
   it("Should navigate to Dragon Charmers Island on clicking the Start Game button", async () => {
@@ -103,7 +135,7 @@ describe("Should render NavComponent", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByText("Character").textContent).toMatch(/Character/i);
 
@@ -156,7 +188,7 @@ describe("Should render NavComponent", () => {
     expect(screen.queryByText(3).textContent).toEqual("3");
   });
 
-  it("Should naviagate to Super Mario Bros on clicking the Start Game button", async () => {
+  it("Should navigate to Super Mario Bros on clicking the Start Game button", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/", "/66dec67b9ab29781c1656ffa"],
       initialIndex: 1,
@@ -170,7 +202,7 @@ describe("Should render NavComponent", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByAltText("Loading..."));
 
-    screen.debug();
+    // screen.debug();
 
     expect(screen.queryByText("Character").textContent).toMatch(/Character/i);
 
@@ -223,7 +255,7 @@ describe("Should render NavComponent", () => {
     expect(screen.queryByText(3).textContent).toEqual("3");
   });
 
-  it("Should naviagate to Universe 113 on clicking the Start Game button", async () => {
+  it("Should navigate to Universe 133 on clicking the Start Game button", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/", "/66def6f6f9626a79596d3aed"],
       initialIndex: 1,
