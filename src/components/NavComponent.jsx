@@ -65,20 +65,22 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
           >
             {singleGameCharacters.filter((char) => !char.marked).length}
           </ul>
-          <li className={style.liDropDownContent} ref={dropDownCharactersRef}>
-            {singleGameCharacters.map((character) =>
-              !character.marked ? (
-                <DropDownMenuContent
-                  key={character._id}
-                  characterImageSrc={character.character_image}
-                  characterImageDescription="Dragon Charmer Island characters"
-                  characterName={character.character_name}
-                />
-              ) : (
-                ""
-              ),
-            )}
-          </li>
+          <ul className={style.ulDropDownContainer} ref={dropDownCharactersRef}>
+            <li className={style.liDropDownContent}>
+              {singleGameCharacters.map((character) =>
+                !character.marked ? (
+                  <DropDownMenuContent
+                    key={character._id}
+                    characterImageSrc={character.character_image}
+                    characterImageDescription="Dragon Charmer Island characters"
+                    characterName={character.character_name}
+                  />
+                ) : (
+                  ""
+                ),
+              )}
+            </li>
+          </ul>
         </nav>
         <div className={style.leaderBoardAndThemeBtnContainer}>
           {showLeaderBoardLink && (

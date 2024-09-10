@@ -53,6 +53,7 @@
   height: 50px;
   width: 50px;
   transition: 250ms;
+  outline: 2px solid white;
 }
 
 .leaderBoardAndThemeBtnContainer {
@@ -94,12 +95,22 @@
   color: #fff;
 }
 
-.liDropDownContent {
+.ulDropDownContainer {
   position: absolute;
   z-index: 1;
   display: none;
   top: 32px;
-  left: -20px;
+  left: -80px;
+}
+
+.liDropDownContent {
+  width: 150px;
+  height: auto;
+  background-color: #0b0d22;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0.8rem;
 }
 
 .ulDropDownContent:hover {
@@ -119,5 +130,15 @@
 
   .navDropDownContainer {
     display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .leaderBoardAndThemeBtnContainer {
+    display: none;
+  }
+
+  .ulDropDownContainer {
+    left: -120px;
   }
 }

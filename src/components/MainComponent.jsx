@@ -1,5 +1,6 @@
 import style from "./MainComponent.module.css";
 import PropTypes from "prop-types";
+import "../index.css";
 
 function MainComponent({
   className,
@@ -29,6 +30,7 @@ function MainComponent({
           {children}
         </div>
       </section>
+      <div className={style.a}></div>
     </main>
   );
 }

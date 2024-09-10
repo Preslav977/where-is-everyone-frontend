@@ -52,6 +52,8 @@ function FetchSingleGame() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
+      console.log(rect);
+
       const retrieveAndSetCoordinates = {
         ...coordinates,
         x: event.clientX - rect.left,
@@ -100,18 +102,18 @@ function FetchSingleGame() {
       });
       const newGameSessionResult = await newGameSession.json();
 
-      console.log(newGameSessionResult);
+      // console.log(newGameSessionResult);
 
       const startTime = new Date(newGameSessionResult.startTime);
 
-      console.log(startTime);
+      // console.log(startTime);
 
       const currentTime = new Date();
 
       calculateStartAndCurrentTime =
         startTime.getTime() - currentTime.getTime();
 
-      console.log(calculateStartAndCurrentTime);
+      // console.log(calculateStartAndCurrentTime);
 
       setGameSessionID(newGameSessionResult._id);
     } catch (err) {
@@ -151,6 +153,8 @@ function FetchSingleGame() {
 
   async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
+
+    console.log(copyCoords);
 
     const findLowerBoundX =
       ((copyCoords.x - centerTargetingBox) / imageWidthAndHeight.width) * 100;
@@ -224,7 +228,7 @@ function FetchSingleGame() {
 
         const checkIfGameIsDoneResult = await checkIfGameIsDone.json();
 
-        console.log(checkIfGameIsDone);
+        // console.log(checkIfGameIsDone);
 
         let calculateElapsedTime =
           Date.parse(checkIfGameIsDoneResult.endTime) -
@@ -264,7 +268,7 @@ function FetchSingleGame() {
 
       const createUserResult = await createUser.json();
 
-      console.log(createUserResult);
+      // console.log(createUserResult);
 
       try {
         const addPlayerToLeaderBoard = await fetch(
@@ -283,7 +287,7 @@ function FetchSingleGame() {
         const addPlayerToLeaderBoardResult =
           await addPlayerToLeaderBoard.json();
 
-        console.log(addPlayerToLeaderBoardResult);
+        // console.log(addPlayerToLeaderBoardResult);
 
         navigate(`/leaderboard/${singleGame._id}`);
       } catch (err) {
@@ -336,7 +340,7 @@ function FetchSingleGame() {
       </NavComponent>
       <MainComponent
         gameImageSrc={singleGame.image_link}
-        // gameImageDescription={singleGameLoader.game_name}
+        gameImageDescription={singleGame.game_name}
         onLoad={startGame}
         useRefProp={gameImageRef}
         onLoadTimer={startTimer}
