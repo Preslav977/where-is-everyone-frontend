@@ -36,9 +36,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterRaftManName = screen.queryAllByText("Raft Man");
 
-    expect(characterRaftManImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterRaftManImg[0].alt).toEqual("Game Characters");
 
     expect(characterRaftManImg[0].src).toEqual(
       "http://localhost:3000/raft-man.png",
@@ -49,9 +47,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterDragonName = screen.queryAllByText("Dragon");
 
-    expect(characterDragonImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterDragonImg[1].alt).toEqual("Game Characters");
 
     expect(characterDragonImg[1].src).toEqual(
       "http://localhost:3000/dragon.png",
@@ -62,9 +58,8 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterWizardName = screen.queryAllByText("Wizard");
 
-    expect(characterWizardImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWizardImg[2].alt).toEqual("Game Characters");
+
     expect(characterWizardImg[2].src).toEqual(
       "http://localhost:3000/wizard.png",
     );
@@ -127,9 +122,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterFireMarioName = screen.queryAllByText("Fire Mario");
 
-    expect(characterFireMarioImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterFireMarioImg[0].alt).toEqual("Game Characters");
 
     expect(characterFireMarioImg[0].src).toEqual(
       "http://localhost:3000/fire-mario.png",
@@ -141,9 +134,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterKingBooName = screen.queryAllByText("King Boo");
 
-    expect(characterKingBooImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterKingBooImg[1].alt).toEqual("Game Characters");
 
     expect(characterKingBooImg[1].src).toEqual(
       "http://localhost:3000/king-boo.png",
@@ -155,9 +146,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterWaluigiName = screen.queryAllByText("Waluigi");
 
-    expect(characterWaluigiImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWaluigiImg[2].alt).toEqual("Game Characters");
 
     expect(characterWaluigiImg[2].src).toEqual(
       "http://localhost:3000/waluigi.png",
@@ -222,9 +211,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterKratosName = screen.queryAllByText("Kratos");
 
-    expect(characterKratosImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterKratosImg[0].alt).toEqual("Game Characters");
 
     expect(characterKratosImg[0].src).toEqual(
       "http://localhost:3000/kratos.png",
@@ -236,9 +223,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterWallyName = screen.queryAllByText("Wally");
 
-    expect(characterWallyImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWallyImg[1].alt).toEqual("Game Characters");
 
     expect(characterWallyImg[1].src).toEqual("http://localhost:3000/wally.png");
 
@@ -248,9 +233,7 @@ describe("Should render FetchSingleGames component", () => {
 
     const characterSonicName = screen.queryAllByText("Sonic");
 
-    expect(characterSonicImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterSonicImg[2].alt).toEqual("Game Characters");
 
     expect(characterSonicImg[2].src).toEqual("http://localhost:3000/sonic.png");
 
@@ -259,7 +242,7 @@ describe("Should render FetchSingleGames component", () => {
     expect(screen.queryByText(3).textContent).toEqual("3");
   });
 
-  it("Should click render the drop-down menu on Universe 133", async () => {
+  it("Should click render the drop-down menu on Universe 113", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/", "/66def6f6f9626a79596d3aed"],
       initialIndex: 1,

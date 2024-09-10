@@ -12,7 +12,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/raft-man.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Raft Man"}
           />
         ),
@@ -29,9 +29,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
       "http://localhost:3000/raft-man.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Raft Man"));
   });
@@ -44,7 +42,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/dragon.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Dragon"}
           />
         ),
@@ -61,9 +59,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
       "http://localhost:3000/dragon.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Dragon"));
   });
@@ -76,7 +72,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/wizard.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Wizard"}
           />
         ),
@@ -93,9 +89,7 @@ describe("Should render DropDownMenuComponent Dragon Charmer's Island", () => {
       "http://localhost:3000/wizard.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Wizard"));
   });
@@ -110,7 +104,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/fire-mario.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Fire Mario"}
           />
         ),
@@ -127,9 +121,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
       "http://localhost:3000/fire-mario.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Fire Mario"));
   });
@@ -142,7 +134,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/king-boo.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"King Boo"}
           />
         ),
@@ -159,9 +151,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
       "http://localhost:3000/king-boo.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("King Boo"));
   });
@@ -174,7 +164,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/waluigi.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Waluigi"}
           />
         ),
@@ -191,9 +181,7 @@ describe("Should render DropDownMenuComponent Super Mario Bros", () => {
       "http://localhost:3000/waluigi.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Waluigi"));
   });
@@ -208,7 +196,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/kratos.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Kratos"}
           />
         ),
@@ -225,9 +213,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
       "http://localhost:3000/kratos.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Kratos"));
   });
@@ -240,7 +226,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/wally.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Wally"}
           />
         ),
@@ -257,9 +243,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
       "http://localhost:3000/wally.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Wally"));
   });
@@ -272,7 +256,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
         element: (
           <DropDownMenuContent
             characterImageSrc={"http://localhost:3000/sonic.png"}
-            characterImageDescription={"Dragon Charmers Island Characters"}
+            characterImageDescription={"Game Characters"}
             characterName={"Sonic"}
           />
         ),
@@ -289,9 +273,7 @@ describe("Should render DropDownMenuComponent Universe 133", () => {
       "http://localhost:3000/sonic.png",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(screen.queryByRole("img").alt).toEqual("Game Characters");
 
     expect(screen.queryByText("Sonic"));
   });

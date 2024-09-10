@@ -71,7 +71,7 @@ describe("Should render MainComponent", () => {
     expect(screen.queryByRole("img").alt).toEqual("Super Mario Bros");
   });
 
-  it("Should render MainComponent Universe 133 with props", () => {
+  it("Should render MainComponent Universe 113 with props", () => {
     const routes = [
       {
         path: "/",
@@ -80,8 +80,8 @@ describe("Should render MainComponent", () => {
           <MainComponent
             className={"mainContainer"}
             position={"fixed"}
-            gameImageSrc={"http://localhost:3000/universe-133.jpg"}
-            gameImageDescription={"Universe 133"}
+            gameImageSrc={"http://localhost:3000/universe-113.jpg"}
+            gameImageDescription={"Universe 113"}
           />
         ),
       },
@@ -98,9 +98,9 @@ describe("Should render MainComponent", () => {
     expect(mainElement, { name: "mainContainer" });
 
     expect(screen.queryByRole("img").src).toEqual(
-      "http://localhost:3000/universe-133.jpg",
+      "http://localhost:3000/universe-113.jpg",
     );
 
-    expect(screen.queryByRole("img").alt).toEqual("Universe 133");
+    expect(screen.queryByRole("img").alt).toEqual("Universe 113");
   });
 });

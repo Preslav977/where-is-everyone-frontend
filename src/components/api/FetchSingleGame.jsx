@@ -324,7 +324,7 @@ function FetchSingleGame() {
             <img
               className={style.navContentFlexCharImg}
               src={character.character_image}
-              alt={"Dragon Charmers Island Characters"}
+              alt={"Game Characters"}
             />
             {!character.marked ? (
               <p className={style.navContentFlexCharName}>

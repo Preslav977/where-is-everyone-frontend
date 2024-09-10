@@ -65,8 +65,8 @@ describe("Should render FetchGames", () => {
       /Start Game/i,
     );
 
-    expect(screen.queryByText("Universe 133").textContent).toMatch(
-      /Universe 133/i,
+    expect(screen.queryByText("Universe 113").textContent).toMatch(
+      /Universe 113/i,
     );
 
     expect(screen.queryAllByText("Start Game")[2].textContent).toMatch(
@@ -127,8 +127,8 @@ describe("Should render FetchGames", () => {
       /Start Game/i,
     );
 
-    expect(screen.queryByText("Universe 133").textContent).toMatch(
-      /Universe 133/i,
+    expect(screen.queryByText("Universe 113").textContent).toMatch(
+      /Universe 113/i,
     );
 
     expect(screen.queryAllByText("Start Game")[2].textContent).toMatch(
@@ -162,9 +162,7 @@ describe("Should render FetchGames", () => {
 
     const characterRaftManName = screen.queryAllByText("Raft Man");
 
-    expect(characterRaftManImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterRaftManImg[0].alt).toEqual("Game Characters");
 
     expect(characterRaftManImg[0].src).toEqual(
       "http://localhost:3000/raft-man.png",
@@ -176,9 +174,7 @@ describe("Should render FetchGames", () => {
 
     const characterDragonName = screen.queryAllByText("Dragon");
 
-    expect(characterDragonImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterDragonImg[1].alt).toEqual("Game Characters");
 
     expect(characterDragonImg[1].src).toEqual(
       "http://localhost:3000/dragon.png",
@@ -190,9 +186,7 @@ describe("Should render FetchGames", () => {
 
     const characterWizardName = screen.queryAllByText("Wizard");
 
-    expect(characterWizardImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWizardImg[2].alt).toEqual("Game Characters");
 
     expect(characterWizardImg[2].src).toEqual(
       "http://localhost:3000/wizard.png",
@@ -229,9 +223,7 @@ describe("Should render FetchGames", () => {
 
     const characterFireMarioName = screen.queryAllByText("Fire Mario");
 
-    expect(characterFireMarioImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterFireMarioImg[0].alt).toEqual("Game Characters");
 
     expect(characterFireMarioImg[0].src).toEqual(
       "http://localhost:3000/fire-mario.png",
@@ -243,9 +235,7 @@ describe("Should render FetchGames", () => {
 
     const characterKingBooName = screen.queryAllByText("King Boo");
 
-    expect(characterKingBooImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterKingBooImg[1].alt).toEqual("Game Characters");
 
     expect(characterKingBooImg[1].src).toEqual(
       "http://localhost:3000/king-boo.png",
@@ -257,9 +247,7 @@ describe("Should render FetchGames", () => {
 
     const characterWaluigiName = screen.queryAllByText("Waluigi");
 
-    expect(characterWaluigiImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWaluigiImg[2].alt).toEqual("Game Characters");
 
     expect(characterWaluigiImg[2].src).toEqual(
       "http://localhost:3000/waluigi.png",
@@ -270,7 +258,7 @@ describe("Should render FetchGames", () => {
     expect(screen.queryByText(3).textContent).toEqual("3");
   });
 
-  it("Should navigate to Universe 133 on clicking the Start Game button", async () => {
+  it("Should navigate to Universe 113 on clicking the Start Game button", async () => {
     const router = createMemoryRouter(routes, {
       initialEntries: ["/", "/66def6f6f9626a79596d3aed"],
       initialIndex: 1,
@@ -296,9 +284,7 @@ describe("Should render FetchGames", () => {
 
     const characterKratosName = screen.queryAllByText("Kratos");
 
-    expect(characterKratosImg[0].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterKratosImg[0].alt).toEqual("Game Characters");
 
     expect(characterKratosImg[0].src).toEqual(
       "http://localhost:3000/kratos.png",
@@ -310,9 +296,7 @@ describe("Should render FetchGames", () => {
 
     const characterWallyName = screen.queryAllByText("Wally");
 
-    expect(characterWallyImg[1].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterWallyImg[1].alt).toEqual("Game Characters");
 
     expect(characterWallyImg[1].src).toEqual("http://localhost:3000/wally.png");
 
@@ -322,9 +306,7 @@ describe("Should render FetchGames", () => {
 
     const characterSonicName = screen.queryAllByText("Sonic");
 
-    expect(characterSonicImg[2].alt).toEqual(
-      "Dragon Charmers Island Characters",
-    );
+    expect(characterSonicImg[2].alt).toEqual("Game Characters");
 
     expect(characterSonicImg[2].src).toEqual("http://localhost:3000/sonic.png");
 
