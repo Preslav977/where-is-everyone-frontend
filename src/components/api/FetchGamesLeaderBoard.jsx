@@ -14,9 +14,12 @@ function FetchGamesLeaderBoard() {
 
   async function retrieveGameId(game) {
     try {
-      const response = await fetch(`http://localhost:3000/games/${game._id}`, {
-        mode: "cors",
-      });
+      const response = await fetch(
+        `https://relieved-snapdragon-longan.glitch.me/games/${game._id}`,
+        {
+          mode: "cors",
+        },
+      );
 
       const singleGame = await response.json();
       const updateSingleGameObject = {
