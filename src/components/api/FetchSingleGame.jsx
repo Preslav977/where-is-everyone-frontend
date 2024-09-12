@@ -90,16 +90,19 @@ function FetchSingleGame() {
 
   async function startGame() {
     try {
-      const newGameSession = await fetch("http://localhost:3000/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const newGameSession = await fetch(
+        "https://relieved-snapdragon-longan.glitch.me/session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            game: singleGame._id,
+            characters: singleGameCharacters,
+          }),
         },
-        body: JSON.stringify({
-          game: singleGame._id,
-          characters: singleGameCharacters,
-        }),
-      });
+      );
       const newGameSessionResult = await newGameSession.json();
 
       // console.log(newGameSessionResult);
@@ -179,7 +182,7 @@ function FetchSingleGame() {
 
     try {
       const markCharacterIfFound = await fetch(
-        "http://localhost:3000/session/:coordinates",
+        "https://relieved-snapdragon-longan.glitch.me/session/:coordinates",
         {
           method: "POST",
           headers: {
@@ -216,7 +219,7 @@ function FetchSingleGame() {
 
       try {
         const checkIfGameIsDone = await fetch(
-          "http://localhost:3000/session/:id",
+          "https://relieved-snapdragon-longan.glitch.me/session/:id",
           {
             method: "PUT",
             headers: {
@@ -257,16 +260,19 @@ function FetchSingleGame() {
     const username = Form.get("username");
 
     try {
-      const createUser = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const createUser = await fetch(
+        "https://relieved-snapdragon-longan.glitch.me/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            score: playerScore,
+          }),
         },
-        body: JSON.stringify({
-          username: username,
-          score: playerScore,
-        }),
-      });
+      );
 
       const createUserResult = await createUser.json();
 
@@ -274,7 +280,7 @@ function FetchSingleGame() {
 
       try {
         const addPlayerToLeaderBoard = await fetch(
-          "http://localhost:3000/leaderboard/:id",
+          "https://relieved-snapdragon-longan.glitch.me/leaderboard/:id",
           {
             method: "POST",
             headers: {

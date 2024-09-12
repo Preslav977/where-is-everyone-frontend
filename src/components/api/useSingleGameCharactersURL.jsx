@@ -15,7 +15,7 @@ const useSingleGameCharactersURL = () => {
 
   useEffect(() => {
     // setTimeout(() => {
-    fetch(`http://localhost:3000/characters/${id}`, {
+    fetch(`https://relieved-snapdragon-longan.glitch.me/characters/${id}`, {
       mode: "cors",
     })
       .then((response) => {

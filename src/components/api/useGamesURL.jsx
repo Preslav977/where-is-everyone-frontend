@@ -8,7 +8,7 @@ const useGamesURL = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/games", {
+    fetch("https://relieved-snapdragon-longan.glitch.me/games", {
       mode: "cors",
     })
       .then((response) => {

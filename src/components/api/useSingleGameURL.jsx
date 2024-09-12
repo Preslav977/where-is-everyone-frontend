@@ -12,20 +12,20 @@ const useSingleGameURL = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    setTimeout(() => {
-      fetch(`http://localhost:3000/games/${id}`, {
-        mode: "cors",
+    // setTimeout(() => {
+    fetch(`https://relieved-snapdragon-longan.glitch.me/games/${id}`, {
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Server Error");
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (response.status >= 400) {
-            throw new Error("Server Error");
-          }
-          return response.json();
-        })
-        .then((response) => setSingleGame(response))
-        .catch((error) => setError(error))
-        .finally(() => setLoading(false));
-    }, 2000);
+      .then((response) => setSingleGame(response))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+    // }, 2000);
   }, [id, setSingleGame]);
 
   return { singleGame, setSingleGame, error, loading };

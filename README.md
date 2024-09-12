@@ -33,6 +33,7 @@ Features:
 - [x] useGamesURL useEffect hook that fetches all games
 - [x] useSingleGameURL useEffect hook that fetches single game with useParams
 - [x] useSingleGameCharactersURL useEffect hook that fetches all characters depending on the game ID
+- [x] created tests for each component
 
 4. Notes and lessons learned
 
