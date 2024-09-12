@@ -144,9 +144,9 @@
 }
 
 @media screen and (max-width: 400px) {
-  .leaderBoardAndThemeBtnContainer {
+  /* .leaderBoardAndThemeBtnContainer {
     display: none;
-  }
+  } */
 
   .ulDropDownContainer {
     left: -120px;
