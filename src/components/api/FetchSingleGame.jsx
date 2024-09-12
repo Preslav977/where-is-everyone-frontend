@@ -52,7 +52,7 @@ function FetchSingleGame() {
     function getCoordinates(e) {
       const rect = e.target.getBoundingClientRect();
 
-      console.log(rect);
+      // console.log(rect);
 
       const retrieveAndSetCoordinates = {
         ...coordinates,
@@ -154,7 +154,7 @@ function FetchSingleGame() {
   async function normalizeCoordinates(character) {
     const copyCoords = { ...coordinates };
 
-    console.log(copyCoords);
+    // console.log(copyCoords);
 
     const findLowerBoundX =
       ((copyCoords.x - centerTargetingBox) / imageWidthAndHeight.width) * 100;
@@ -174,6 +174,8 @@ function FetchSingleGame() {
       lowerY: findLowerBoundY,
       upperY: findUpperBoundY,
     };
+
+    // console.log(mousePositionsObject);
 
     try {
       const markCharacterIfFound = await fetch(
@@ -196,7 +198,7 @@ function FetchSingleGame() {
 
       const markCharacterIfFoundResult = await markCharacterIfFound.json();
 
-      console.log(markCharacterIfFoundResult);
+      // console.log(markCharacterIfFoundResult);
 
       if (markCharacterIfFoundResult.message !== "Target not found") {
         setSingleGameCharacters(
@@ -298,17 +300,19 @@ function FetchSingleGame() {
     }
   }
 
-  if (loading && loadingCharacters)
+  if (loading && loadingCharacters) {
     return (
       <div className="loadingContainer">
         <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
+  }
 
-  if (error && errorCharacters)
+  if (error && errorCharacters) {
     <div>
       return <p>A network error was encountered</p>
     </div>;
+  }
 
   return (
     <>
@@ -317,7 +321,7 @@ function FetchSingleGame() {
         showLeaderBoardLink={false}
       >
         {singleGameCharacters.map((character) => (
-          <div
+          <section
             key={character._id}
             className={style.navContentFlexCharContainer}
           >
@@ -335,15 +339,15 @@ function FetchSingleGame() {
                 {character.character_name}
               </p>
             )}
-          </div>
+          </section>
         ))}
       </NavComponent>
       <MainComponent
         gameImageSrc={singleGame.image_link}
         gameImageDescription={singleGame.game_name}
         onLoad={startGame}
-        useRefProp={gameImageRef}
         onLoadTimer={startTimer}
+        useRefProp={gameImageRef}
         position={checkIfGameIsFinished ? "fixed" : ""}
       >
         {checkIfGameIsFinished ? (
@@ -353,7 +357,7 @@ function FetchSingleGame() {
         )}
         {singleGameCharacters.map((character) =>
           character.marked ? (
-            <div
+            <figure
               key={character._id}
               style={{
                 position: "absolute",
@@ -370,12 +374,12 @@ function FetchSingleGame() {
                 src="character-found.svg"
                 alt="Marker on found character"
               />
-            </div>
+            </figure>
           ) : (
             ""
           ),
         )}
-        <div
+        <figure
           data-testid="targeting-box"
           style={{
             display: "none",
@@ -385,15 +389,15 @@ function FetchSingleGame() {
           }}
           ref={targetingBoxAndCharactersDropDownRef}
         >
-          <div className="dropDownContent">
-            <div
+          <section className="dropDownContent">
+            <figure
               className={`${!checkIfGameIsFinished ? "dropDownTargetingBox" : "hideDropDownTargetingBox"}`}
             >
-              <div
+              <figure
                 className={`${!checkIfGameIsFinished ? "targetingBoxDot" : "hideTargetingBoxDot"}`}
-              ></div>
-            </div>
-            <div
+              ></figure>
+            </figure>
+            <figure
               style={{
                 left: `${coordinates.x - centerTargetingBox}px`,
                 top: `${coordinates.y - centerTargetingBox}px`,
@@ -413,9 +417,9 @@ function FetchSingleGame() {
                   ""
                 ),
               )}
-            </div>
-          </div>
-        </div>
+            </figure>
+          </section>
+        </figure>
       </MainComponent>
     </>
   );

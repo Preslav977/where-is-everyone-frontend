@@ -1,14 +1,14 @@
 .tableContainer {
   max-width: 750px;
   margin-top: 1em;
-  color: white;
+  color: #e8e6fe;
   width: 100%;
   padding: 0 1rem;
 }
 
 .table {
-  outline: 2px solid white;
-  color: white;
+  outline: 2px solid #e8e6fe;
+  color: #e8e6fe;
   display: table;
   width: 100%;
 }

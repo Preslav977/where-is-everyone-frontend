@@ -1,5 +1,6 @@
 .gameContainer {
   width: 400px;
+  /* width: 100%; */
 }
 
 .gameImgContainer {
@@ -20,7 +21,7 @@
   justify-content: center;
   align-items: center;
   background-color: #071926;
-  color: #fff;
+  color: #e8e6fe;
   padding: 1rem;
 }
 
@@ -37,8 +38,18 @@
   transition: transform 400ms;
 }
 
+.gameDescriptionLinkContainer > a {
+  color: #122536;
+}
+
 .gameDescriptionLinkContainer:hover {
   transition: ease-in-out 150ms;
   transform: translateY(-5px);
   box-shadow: 0px 0px 5px #4ce1d7;
+}
+
+@media screen and (max-width: 850px) {
+  .gameContainer {
+    width: 100%;
+  }
 }

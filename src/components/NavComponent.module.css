@@ -12,7 +12,8 @@
   border: 0;
   padding: 0.8em;
   background-color: #0b0d22;
-  color: white;
+  color: #e8e6fe;
+  font-size: 1.32rem;
 }
 
 .navLinkSpan {
@@ -20,8 +21,8 @@
 }
 
 .navContentGameTime {
-  font-size: 1.35rem;
-  color: white;
+  font-size: 1.15rem;
+  color: #e8e6fe;
 }
 
 .navContentFlexCharWrapper {
@@ -36,11 +37,11 @@
 }
 
 .navContentFlexCharName {
-  color: white;
+  color: #e8e6fe;
 }
 
 .navContentFlexCharNameMarked {
-  color: white;
+  color: #e8e6fe;
   text-decoration: line-through;
 }
 
@@ -53,7 +54,7 @@
   height: 50px;
   width: 50px;
   transition: 250ms;
-  outline: 2px solid white;
+  outline: 2px solid #e8e6fe;
 }
 
 .leaderBoardAndThemeBtnContainer {
@@ -92,7 +93,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #e8e6fe;
 }
 
 .ulDropDownContainer {
@@ -115,6 +116,15 @@
 
 .ulDropDownContent:hover {
   cursor: pointer;
+}
+
+.leaderBoardLink {
+  font-size: 1.32rem;
+}
+
+.ulContainer a:visited,
+.leaderBoardLink {
+  color: #e8e6fe;
 }
 
 @media screen and (max-width: 710px) {

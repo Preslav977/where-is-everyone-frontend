@@ -29,12 +29,13 @@ function FetchGamesLeaderBoard() {
     }
   }
 
-  if (loading)
+  if (loading) {
     return (
       <div data-testid="loading" className="loadingContainer">
         <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
+  }
 
   if (error) {
     return (
@@ -49,8 +50,8 @@ function FetchGamesLeaderBoard() {
       <>
         <NavComponent showLeaderBoardLink={true} />
         <main className={style.mainGameContainer}>
-          <h2 className={style.mainGameHeader}>Leaderboard</h2>
-          <section className={style.mainGameSection}>
+          <h1 className={style.mainGameHeader}>Leaderboard</h1>
+          <div className={style.mainGameSection}>
             {games.map((game) => (
               <GameComponent
                 key={game._id}
@@ -63,7 +64,7 @@ function FetchGamesLeaderBoard() {
                 gameLink={`/${game._id}`}
               />
             ))}
-          </section>
+          </div>
         </main>
       </>
     );
@@ -72,8 +73,8 @@ function FetchGamesLeaderBoard() {
       <>
         <NavComponent showLeaderBoardLink={true} />
         <main className={style.mainGameContainer}>
-          <h2 className={style.mainGameHeader}>Leaderboard</h2>
-          <section className={style.mainGameSection}>
+          <h1 className={style.mainGameHeader}>Leaderboard</h1>
+          <div className={style.mainGameSection}>
             {games.map((game) => (
               <GameComponent
                 key={game._id}
@@ -86,13 +87,13 @@ function FetchGamesLeaderBoard() {
                 gameLink={`/${game._id}`}
               />
             ))}
-          </section>
-          <div className={style.leaderBoardGameContainer}>
-            <h3 className={style.leaderBoardHeader}> {singleGame.game_name}</h3>
+          </div>
+          <section className={style.leaderBoardGameContainer}>
+            <h2 className={style.leaderBoardHeader}> {singleGame.game_name}</h2>
             {singleGame.leaderboard.users.length === 0 ? (
-              <h4 className={style.leaderBoardContent}>
+              <h3 className={style.leaderBoardContent}>
                 No one has played the game, yet!
-              </h4>
+              </h3>
             ) : (
               <LeaderBoardTable>
                 {singleGame.leaderboard.users.map((user, index) => (
@@ -105,7 +106,7 @@ function FetchGamesLeaderBoard() {
                 ))}
               </LeaderBoardTable>
             )}
-          </div>
+          </section>
         </main>
       </>
     );

@@ -13,8 +13,8 @@ function GameComponent({
   gameLink,
 }) {
   return (
-    <div onClick={onClick} className={style.gameContainer}>
-      <div className={style.gameImgContainer}>
+    <section onClick={onClick} className={style.gameContainer}>
+      <figure className={style.gameImgContainer}>
         {showLinkToLeaderBoard ? (
           <Link to={`/leaderboard/${gameID}`}>
             <img
@@ -30,8 +30,8 @@ function GameComponent({
             alt={gameImageDescription}
           />
         )}
-      </div>
-      <div className={style.gameDescription}>
+      </figure>
+      <section className={style.gameDescription}>
         <h3>{gameName}</h3>
         {showButton && (
           <div className={style.gameDescriptionLinkContainer}>
@@ -40,8 +40,8 @@ function GameComponent({
             </a>
           </div>
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

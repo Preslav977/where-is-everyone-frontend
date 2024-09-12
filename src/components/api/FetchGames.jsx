@@ -6,12 +6,13 @@ import useGamesURL from "./useGamesURL";
 function FetchGames() {
   const { games, error, loading } = useGamesURL();
 
-  if (loading)
+  if (loading) {
     return (
       <div data-testid="loading" className="loadingContainer">
         <img className="loading" src="loading.svg" alt="Loading..." />
       </div>
     );
+  }
 
   if (error) {
     return (
@@ -25,8 +26,8 @@ function FetchGames() {
     <>
       <NavComponent showLeaderBoardLink={true} />
       <main className={style.mainGameContainer}>
-        <h2 className={style.mainGameHeader}>Games</h2>
-        <section className={style.mainGameSection}>
+        <h1 className={style.mainGameHeader}>Games</h1>
+        <div className={style.mainGameSection}>
           {games.map((game) => (
             <GameComponent
               key={game._id}
@@ -38,7 +39,7 @@ function FetchGames() {
               gameLink={`/${game._id}`}
             />
           ))}
-        </section>
+        </div>
       </main>
     </>
   );

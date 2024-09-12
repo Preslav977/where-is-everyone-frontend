@@ -1,6 +1,7 @@
 .mainGameContainer {
   background-color: #0b0d22;
   flex-grow: 1;
+  padding: 0 1em;
 }
 
 .mainGameSection {
@@ -13,8 +14,9 @@
 
 .mainGameHeader {
   text-align: center;
-  color: #fff;
+  color: #e8e6fe;
   margin-bottom: 1rem;
+  font-size: 1.8rem;
 }
 
 .leaderBoardGameContainer {
@@ -26,6 +28,12 @@
   max-width: 1000px;
   margin: 0 auto;
   text-align: center;
+}
+
+@media screen and (max-width: 1130px) {
+  .mainGameSection {
+    flex-wrap: wrap;
+  }
 }
 
 @media screen and (max-width: 800px) {

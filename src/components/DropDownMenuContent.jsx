@@ -8,7 +8,7 @@ function DropDownMenuContent({
   onClick,
 }) {
   return (
-    <div
+    <section
       data-testid="drop-down-characters"
       onClick={onClick}
       className={style.dropDownCharacterContainer}
@@ -19,7 +19,7 @@ function DropDownMenuContent({
         alt={characterImageDescription}
       />
       <p>{characterName}</p>
-    </div>
+    </section>
   );
 }
 

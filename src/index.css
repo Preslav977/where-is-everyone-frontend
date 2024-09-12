@@ -88,15 +88,12 @@ a {
   text-decoration: none;
 }
 
-a:visited {
-  color: white;
-}
-
 body,
 #root,
 html {
   height: 100%;
   background-color: #0b0d22;
+  font-family: Nunito, "Courier New", Courier, monospace;
 }
 
 #root {

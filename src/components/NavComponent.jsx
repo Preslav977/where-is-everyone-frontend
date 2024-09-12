@@ -33,19 +33,19 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
           </a>
         </ul>
         <p className={style.navContentGameTime}>{gameTime}</p>
-        <div className={style.navContentFlexCharWrapper}>{children}</div>
-        <div className={style.leaderBoardAndThemeBtnContainer}>
+        <ul className={style.navContentFlexCharWrapper}>{children}</ul>
+        <ul className={style.leaderBoardAndThemeBtnContainer}>
           {showLeaderBoardLink && (
-            <div className={style.leaderBoardLinkContainer}>
+            <li className={style.leaderBoardLinkContainer}>
               <a className={style.leaderBoardLink} href={"/leaderboard"}>
                 Leaderboard
               </a>
-            </div>
+            </li>
           )}
           <div>
             <button>Btn</button>
           </div>
-        </div>
+        </ul>
       </nav>
     );
   } else {
@@ -57,7 +57,7 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
           </a>
         </ul>
         <p className={style.navContentGameTime}>{gameTime}</p>
-        <div className={style.navContentFlexCharWrapper}>{children}</div>
+        <ul className={style.navContentFlexCharWrapper}>{children}</ul>
         <nav className={style.navDropDownContainer}>
           <ul
             className={style.ulDropDownContent}
@@ -82,18 +82,18 @@ function NavComponent({ gameTime, showLeaderBoardLink, children }) {
             </li>
           </ul>
         </nav>
-        <div className={style.leaderBoardAndThemeBtnContainer}>
+        <ul className={style.leaderBoardAndThemeBtnContainer}>
           {showLeaderBoardLink && (
-            <div className={style.leaderBoardLinkContainer}>
+            <li className={style.leaderBoardLinkContainer}>
               <a className={style.leaderBoardLink} href={"/leaderboard"}>
                 Leaderboard
               </a>
-            </div>
+            </li>
           )}
           <div>
             <button></button>
           </div>
-        </div>
+        </ul>
       </nav>
     );
   }

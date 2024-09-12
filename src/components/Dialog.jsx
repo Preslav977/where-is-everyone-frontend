@@ -6,9 +6,9 @@ function Dialog({ playerScore, onSubmit }) {
     <div className={style.dialogContainer}>
       <dialog className={style.dialogContent} open>
         <form method="dialog" onSubmit={onSubmit}>
-          <h3>You finished in {playerScore}!</h3>
+          <h4>You finished in {playerScore}!</h4>
           <p>Submit your score to the leaderboard</p>
-          <div className={style.dialogFlexContainer}>
+          <section className={style.dialogFlexContainer}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -17,7 +17,7 @@ function Dialog({ playerScore, onSubmit }) {
               maxLength={30}
               required
             />
-          </div>
+          </section>
           <div className={style.dialogSubmitBtnContainer}>
             <button>Submit</button>
           </div>

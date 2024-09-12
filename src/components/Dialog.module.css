@@ -8,7 +8,7 @@
   background-color: #0b0b22;
   border-radius: 10px;
   border: #0b0b22;
-  color: #fff;
+  color: #e8e6fe;
   line-height: 1.8;
 }
 
@@ -33,7 +33,7 @@ label {
   border-radius: 5px;
   padding: 0.2rem 0;
   border-color: white;
-  color: #fff;
+  color: #e8e6fe;
 }
 
 .dialogSubmitBtnContainer {
@@ -52,4 +52,18 @@ label {
 .dialogSubmitBtnContainer button:hover {
   cursor: pointer;
   opacity: 0.75;
+}
+
+@media screen and (max-width: 600px) {
+  form h4,
+  form p {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  form h4,
+  form p {
+    text-align: center;
+  }
 }
