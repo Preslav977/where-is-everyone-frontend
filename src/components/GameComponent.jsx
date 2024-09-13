@@ -14,13 +14,14 @@ function GameComponent({
 }) {
   return (
     <section onClick={onClick} className={style.gameContainer}>
-      <figure className={style.gameImgContainer}>
+      <div className={style.gameImgContainer}>
         {showLinkToLeaderBoard ? (
           <Link to={`/leaderboard/${gameID}`}>
             <img
               className={style.gameImage}
               src={gameImage}
               alt={gameImageDescription}
+              aria-label="Show game leaderboard"
             />
           </Link>
         ) : (
@@ -30,17 +31,15 @@ function GameComponent({
             alt={gameImageDescription}
           />
         )}
-      </figure>
-      <section className={style.gameDescription}>
-        <h3>{gameName}</h3>
+      </div>
+      <div className={style.gameDescription}>
+        <h2>{gameName}</h2>
         {showButton && (
-          <div className={style.gameDescriptionLinkContainer}>
-            <a data-testid="start-game" href={gameLink}>
-              Start Game
-            </a>
-          </div>
+          <a className={style.gameDescriptionLinkContainer} href={gameLink}>
+            <p data-testid="start-game">Start Game</p>
+          </a>
         )}
-      </section>
+      </div>
     </section>
   );
 }

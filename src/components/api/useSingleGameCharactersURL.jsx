@@ -14,7 +14,6 @@ const useSingleGameCharactersURL = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // setTimeout(() => {
     fetch(`https://relieved-snapdragon-longan.glitch.me/characters/${id}`, {
       mode: "cors",
     })
@@ -27,7 +26,6 @@ const useSingleGameCharactersURL = () => {
       .then((response) => setSingleGameCharacters(response))
       .catch((errorCharacters) => setErrorCharacters(errorCharacters))
       .finally(() => setLoadingCharacters(false));
-    // }, 3000);
   }, [id, setSingleGameCharacters]);
 
   return {

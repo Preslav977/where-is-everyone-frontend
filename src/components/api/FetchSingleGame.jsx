@@ -327,7 +327,7 @@ function FetchSingleGame() {
         showLeaderBoardLink={false}
       >
         {singleGameCharacters.map((character) => (
-          <section
+          <div
             key={character._id}
             className={style.navContentFlexCharContainer}
           >
@@ -345,7 +345,7 @@ function FetchSingleGame() {
                 {character.character_name}
               </p>
             )}
-          </section>
+          </div>
         ))}
       </NavComponent>
       <MainComponent
@@ -363,7 +363,7 @@ function FetchSingleGame() {
         )}
         {singleGameCharacters.map((character) =>
           character.marked ? (
-            <figure
+            <div
               key={character._id}
               style={{
                 position: "absolute",
@@ -380,12 +380,12 @@ function FetchSingleGame() {
                 src="character-found.svg"
                 alt="Marker on found character"
               />
-            </figure>
+            </div>
           ) : (
             ""
           ),
         )}
-        <figure
+        <div
           data-testid="targeting-box"
           style={{
             display: "none",
@@ -396,14 +396,14 @@ function FetchSingleGame() {
           ref={targetingBoxAndCharactersDropDownRef}
         >
           <section className="dropDownContent">
-            <figure
+            <div
               className={`${!checkIfGameIsFinished ? "dropDownTargetingBox" : "hideDropDownTargetingBox"}`}
             >
-              <figure
+              <div
                 className={`${!checkIfGameIsFinished ? "targetingBoxDot" : "hideTargetingBoxDot"}`}
-              ></figure>
-            </figure>
-            <figure
+              ></div>
+            </div>
+            <div
               style={{
                 left: `${coordinates.x - centerTargetingBox}px`,
                 top: `${coordinates.y - centerTargetingBox}px`,
@@ -423,9 +423,9 @@ function FetchSingleGame() {
                   ""
                 ),
               )}
-            </figure>
+            </div>
           </section>
-        </figure>
+        </div>
       </MainComponent>
     </>
   );

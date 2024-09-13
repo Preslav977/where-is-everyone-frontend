@@ -1,6 +1,5 @@
 .gameContainer {
   width: 400px;
-  /* width: 100%; */
 }
 
 .gameImgContainer {
@@ -20,6 +19,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   background-color: #071926;
   color: #e8e6fe;
   padding: 1rem;

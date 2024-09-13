@@ -49,6 +49,7 @@ Features:
 
 5. Features or things I'd love to work on in the future
 
+- [ ] Figure out how to add an indicator on a miss or character found.
 - [ ] Figure out how to better organize the variables in the CSS.
 - [ ] Figure out a better way to reuse a single component instead of creating the same component with minor differences.
 - [ ] Figure out how to make the application more accessible using semantics.

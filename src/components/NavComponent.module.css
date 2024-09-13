@@ -143,10 +143,10 @@
   }
 }
 
-@media screen and (max-width: 400px) {
-  /* .leaderBoardAndThemeBtnContainer {
-    display: none;
-  } */
+@media screen and (max-width: 350px) {
+  .ulDropDownContent {
+    margin-left: 0.6rem;
+  }
 
   .ulDropDownContainer {
     left: -120px;

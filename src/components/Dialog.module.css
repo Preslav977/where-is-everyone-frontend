@@ -55,14 +55,14 @@ label {
 }
 
 @media screen and (max-width: 600px) {
-  form h4,
+  form h5,
   form p {
     text-align: center;
   }
 }
 
 @media screen and (max-width: 470px) {
-  form h4,
+  form h5,
   form p {
     text-align: center;
   }

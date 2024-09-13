@@ -1,5 +1,24 @@
 .footerContainer {
   margin-top: auto;
   padding: 1em;
-  /* background-color: #0b0d22; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerImage {
+  width: 30px;
+  height: 30px;
+}
+
+.footerLiContainer a {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  gap: 0.3rem;
+}
+
+a {
+  color: white;
+  font-size: 1.2rem;
 }

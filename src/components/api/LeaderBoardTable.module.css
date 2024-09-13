@@ -29,3 +29,10 @@ th {
   border-collapse: collapse;
   color: #e8e6f6;
 }
+
+@media screen and (max-width: 400px) {
+  .tableCell,
+  td {
+    padding: 0.3rem;
+  }
+}

@@ -15,10 +15,7 @@ function MainComponent({
   return (
     <main className={className}>
       <section className={style.mainGameSectionWrapper}>
-        <figure
-          className={style.mainGameContent}
-          style={{ position: position }}
-        >
+        <div className={style.mainGameContent} style={{ position: position }}>
           <img
             data-testid="main-img"
             ref={useRefProp}
@@ -31,9 +28,8 @@ function MainComponent({
             alt={gameImageDescription}
           />
           {children}
-        </figure>
+        </div>
       </section>
-      <div className={style.a}></div>
     </main>
   );
 }

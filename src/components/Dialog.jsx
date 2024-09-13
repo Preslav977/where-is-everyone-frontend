@@ -6,7 +6,7 @@ function Dialog({ playerScore, onSubmit }) {
     <div className={style.dialogContainer}>
       <dialog className={style.dialogContent} open>
         <form method="dialog" onSubmit={onSubmit}>
-          <h4>You finished in {playerScore}!</h4>
+          <h5>You finished in {playerScore}!</h5>
           <p>Submit your score to the leaderboard</p>
           <section className={style.dialogFlexContainer}>
             <label htmlFor="username">Username</label>

@@ -22,6 +22,7 @@ function FetchGamesLeaderBoard() {
       );
 
       const singleGame = await response.json();
+
       const updateSingleGameObject = {
         ...singleGame,
         singleGame,
@@ -92,11 +93,11 @@ function FetchGamesLeaderBoard() {
             ))}
           </div>
           <section className={style.leaderBoardGameContainer}>
-            <h2 className={style.leaderBoardHeader}> {singleGame.game_name}</h2>
+            <h3 className={style.leaderBoardHeader}> {singleGame.game_name}</h3>
             {singleGame.leaderboard.users.length === 0 ? (
-              <h3 className={style.leaderBoardContent}>
+              <h4 className={style.leaderBoardContent}>
                 No one has played the game, yet!
-              </h3>
+              </h4>
             ) : (
               <LeaderBoardTable>
                 {singleGame.leaderboard.users.map((user, index) => (
