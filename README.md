@@ -11,6 +11,11 @@ This is the frontend of the project. Created with React. Where's Everyone is a p
 Photo tagging game that you need to search for characters and based on the shortest time you can earn a place in the leaderboard
 The game is consistent in frontend and backend, which reduces the chances that you can cheat.
 
+# Live Previews
+
+- [View the live site here](https://where-is-everyone-frontend.vercel.app/)
+- [View the back-end API repository here](https://github.com/Preslav977/where-is-everyone-backend)
+
 # Features
 
 - Timer that will be synchronized with the backend
