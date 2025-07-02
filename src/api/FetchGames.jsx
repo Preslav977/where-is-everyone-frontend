@@ -1,6 +1,6 @@
+import GameComponent from "../components/GameComponent";
+import NavComponent from "../components/NavComponent";
 import style from "./FetchGames.module.css";
-import GameComponent from "../GameComponent";
-import NavComponent from "../NavComponent";
 import useGamesURL from "./useGamesURL";
 
 function FetchGames() {

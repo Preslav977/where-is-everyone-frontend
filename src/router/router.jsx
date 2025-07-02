@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import FetchGames from "../components/api/FetchGames";
-import FetchSingleGame from "../components/api/FetchSingleGame";
-import LeaderBoardTable from "../components/api/LeaderBoardTable";
+import FetchGames from "../api/FetchGames";
+import FetchSingleGame from "../api/FetchSingleGame";
+import LeaderBoardTable from "../api/LeaderBoardTable";
 // import { fetchSingleGameLoader } from "../components/api/FetchSingleGame";
-import FetchGamesLeaderBoard from "../components/api/FetchGamesLeaderBoard";
+import FetchGamesLeaderBoard from "../api/FetchGamesLeaderBoard";
 
 const router = createBrowserRouter([
   {
