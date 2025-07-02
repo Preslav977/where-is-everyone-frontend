@@ -1,6 +1,7 @@
-import { SingleGameCharactersContext } from "../../App";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { SingleGameCharactersContext } from "../App";
+import { localhostURL } from "../utils/localhostURL";
 
 const useSingleGameCharactersURL = () => {
   const [singleGameCharacters, setSingleGameCharacters] = useContext(
@@ -14,7 +15,7 @@ const useSingleGameCharactersURL = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`https://relieved-snapdragon-longan.glitch.me/characters/${id}`, {
+    fetch(`${localhostURL}/characters/${id}`, {
       mode: "cors",
     })
       .then((response) => {

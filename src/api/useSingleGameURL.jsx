@@ -1,6 +1,7 @@
-import { SingleGameContext } from "../../App";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { SingleGameContext } from "../App";
+import { localhostURL } from "../utils/localhostURL";
 
 const useSingleGameURL = () => {
   const [singleGame, setSingleGame] = useContext(SingleGameContext);
@@ -13,7 +14,7 @@ const useSingleGameURL = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      fetch(`https://relieved-snapdragon-longan.glitch.me/games/${id}`, {
+      fetch(`${localhostURL}/games/${id}`, {
         mode: "cors",
       })
         .then((response) => {

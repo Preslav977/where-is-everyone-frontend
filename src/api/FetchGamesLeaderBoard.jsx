@@ -1,11 +1,12 @@
-import { SingleGameContext } from "../../App";
-import GameComponent from "../GameComponent";
-import NavComponent from "../NavComponent";
-import LeaderBoardTable from "./LeaderBoardTable";
-import { useContext } from "react";
 import { format } from "date-fns";
-import useGamesURL from "./useGamesURL";
+import { useContext } from "react";
+import { SingleGameContext } from "../App";
+import GameComponent from "../components/GameComponent";
+import NavComponent from "../components/NavComponent";
+import { localhostURL } from "../utils/localhostURL";
 import style from "./FetchGamesLeaderBoard.module.css";
+import LeaderBoardTable from "./LeaderBoardTable";
+import useGamesURL from "./useGamesURL";
 
 function FetchGamesLeaderBoard() {
   const { games, error, loading } = useGamesURL();
@@ -14,12 +15,9 @@ function FetchGamesLeaderBoard() {
 
   async function retrieveGameId(game) {
     try {
-      const response = await fetch(
-        `https://relieved-snapdragon-longan.glitch.me/games/${game._id}`,
-        {
-          mode: "cors",
-        },
-      );
+      const response = await fetch(`${localhostURL}/games/${game._id}`, {
+        mode: "cors",
+      });
 
       const singleGame = await response.json();
 

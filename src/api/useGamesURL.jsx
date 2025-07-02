@@ -1,5 +1,6 @@
-import { AllGamesContext } from "../../App";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AllGamesContext } from "../App";
+import { localhostURL } from "../utils/localhostURL";
 
 const useGamesURL = () => {
   const [games, setGames] = useContext(AllGamesContext);
@@ -8,7 +9,7 @@ const useGamesURL = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://relieved-snapdragon-longan.glitch.me/games", {
+    fetch(`${localhostURL}/games`, {
       mode: "cors",
     })
       .then((response) => {

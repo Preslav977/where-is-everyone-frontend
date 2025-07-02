@@ -1,12 +1,13 @@
-import { useEffect, useState, useRef } from "react";
-import MainComponent from "../MainComponent";
-import DropDownMenuContent from "../DropDownMenuContent";
-import Dialog from "../Dialog";
-import NavComponent from "../NavComponent";
-import style from "../NavComponent.module.css";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useSingleGameURL from "./useSingleGameURL";
+import Dialog from "../components/Dialog";
+import DropDownMenuContent from "../components/DropDownMenuContent";
+import MainComponent from "../components/MainComponent";
+import NavComponent from "../components/NavComponent";
+import style from "../components/NavComponent.module.css";
+import { localhostURL } from "../utils/localhostURL";
 import useSingleGameCharactersURL from "./useSingleGameCharactersURL";
+import useSingleGameURL from "./useSingleGameURL";
 
 function FetchSingleGame() {
   const { singleGame, error, loading } = useSingleGameURL();
@@ -90,19 +91,16 @@ function FetchSingleGame() {
 
   async function startGame() {
     try {
-      const newGameSession = await fetch(
-        "https://relieved-snapdragon-longan.glitch.me/session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            game: singleGame._id,
-            characters: singleGameCharacters,
-          }),
+      const newGameSession = await fetch(`${localhostURL}/session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          game: singleGame._id,
+          characters: singleGameCharacters,
+        }),
+      });
       const newGameSessionResult = await newGameSession.json();
 
       // console.log(newGameSessionResult);
@@ -182,7 +180,7 @@ function FetchSingleGame() {
 
     try {
       const markCharacterIfFound = await fetch(
-        "https://relieved-snapdragon-longan.glitch.me/session/:coordinates",
+        `${localhostURL}/session/:coordinates`,
         {
           method: "POST",
           headers: {
@@ -218,18 +216,15 @@ function FetchSingleGame() {
       }
 
       try {
-        const checkIfGameIsDone = await fetch(
-          "https://relieved-snapdragon-longan.glitch.me/session/:id",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: gameSessionID,
-            }),
+        const checkIfGameIsDone = await fetch(`${localhostURL}/session/:id`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({
+            id: gameSessionID,
+          }),
+        });
 
         const checkIfGameIsDoneResult = await checkIfGameIsDone.json();
 
@@ -260,19 +255,16 @@ function FetchSingleGame() {
     const username = Form.get("username");
 
     try {
-      const createUser = await fetch(
-        "https://relieved-snapdragon-longan.glitch.me/users",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            score: playerScore,
-          }),
+      const createUser = await fetch(`${localhostURL}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          username: username,
+          score: playerScore,
+        }),
+      });
 
       const createUserResult = await createUser.json();
 
@@ -280,7 +272,7 @@ function FetchSingleGame() {
 
       try {
         const addPlayerToLeaderBoard = await fetch(
-          "https://relieved-snapdragon-longan.glitch.me/leaderboard/:id",
+          `${localhostURL}/leaderboard/:id`,
           {
             method: "POST",
             headers: {
